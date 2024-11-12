@@ -13,7 +13,8 @@ use num_traits::{PrimInt, Unsigned};
 
 /// `BitUint` is a type that represents a `N`-bit unsigned integer.
 ///
-/// The largest size of `N` is equal to the size of the underlying type in bits.
+/// `N` is the number of bits in the value. The largest size of `N` is equal to
+/// the size of the underlying type in bits.
 ///
 /// # Examples
 ///

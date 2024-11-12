@@ -13,7 +13,8 @@ use num_traits::{PrimInt, Signed};
 
 /// `BitInt` is a type that represents a `N`-bit signed integer.
 ///
-/// The largest size of `N` is equal to the size of the underlying type in bits.
+/// `N` is the number of bits in the value, including the sign bit. The largest
+/// size of `N` is equal to the size of the underlying type in bits.
 ///
 /// # Examples
 ///

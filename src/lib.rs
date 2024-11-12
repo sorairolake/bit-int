@@ -5,13 +5,14 @@
 //! The `bit-int` crate is a library for providing arbitrary fixed bit-width
 //! integers.
 //!
-//! The [`BitInt`] type represents a `N`-bit signed integer. This type is
-//! similar to `signed _BitInt(n)` in [C23], or arbitrary fixed bit-width signed
-//! integer types (e.g., `i7`) in [Zig].
+//! The value is represented by either of the following types:
 //!
-//! The [`BitUint`] type represents a `N`-bit unsigned integer. This type is
-//! similar to `unsigned _BitInt(n)` in C23, or arbitrary fixed bit-width
-//! unsigned integer types (e.g., `u7`) in Zig.
+//! - The [`BitInt`] type represents a `N`-bit signed integer. This type is
+//!   similar to `signed _BitInt(n)` in [C23], or arbitrary fixed bit-width
+//!   signed integer types (e.g., `i7`) in [Zig].
+//! - The [`BitUint`] type represents a `N`-bit unsigned integer. This type is
+//!   similar to `unsigned _BitInt(n)` in C23, or arbitrary fixed bit-width
+//!   unsigned integer types (e.g., `u7`) in Zig.
 //!
 //! The largest size of `N` depends on the size of the underlying type in bits.
 //! Therefore, when the underlying type of [`BitInt`] is [`i32`], the largest
