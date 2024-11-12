@@ -7,7 +7,7 @@ name = "bit-int"
 version = "0.1.0"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
-rust-version = "1.56.0"
+rust-version = "1.61.0"
 description = "An arbitrary fixed bit-width integer library"
 documentation = "https://docs.rs/bit-int"
 readme = "README.md"
@@ -20,6 +20,7 @@ include = ["/LICENSES", "/README.md", "/src"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+num-traits = { version = "0.2.19", default-features = false }
 
 [lints.clippy]
 cargo = "warn"
