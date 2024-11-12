@@ -18,11 +18,32 @@ use num_traits::{PrimInt, Unsigned};
 ///
 /// # Examples
 ///
-/// ```compile_fail
-/// use bit_int::BitUint;
+/// ```
+/// # use bit_int::BitUint;
+/// #
+/// type Uint = BitUint<u8, 7>;
 ///
-/// let n = BitUint::<u32, 33>::new(42);
-/// assert_eq!(n.map(BitUint::get), Some(42));
+/// let n = Uint::new(127).unwrap();
+/// assert_eq!(n, Uint::MAX);
+///
+/// assert!(n.checked_add(1).is_none());
+/// assert_eq!(n.get().checked_add(1), Some(128));
+/// ```
+///
+/// In this case, `N` must be less than or equal to [`u32::BITS`]:
+///
+/// ```compile_fail
+/// # use bit_int::BitUint;
+/// #
+/// let _ = BitUint::<u32, 33>::new(42);
+/// ```
+///
+/// `N` must be greater than `0`:
+///
+/// ```compile_fail
+/// # use bit_int::BitUint;
+/// #
+/// let _ = BitUint::<u64, 0>::new(0);
 /// ```
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(transparent)]
