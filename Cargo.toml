@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2024 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+[package]
+name = "bit-int"
+version = "0.1.0"
+authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
+edition = "2021"
+rust-version = "1.61.0"
+description = "An arbitrary fixed bit-width integer library"
+documentation = "https://docs.rs/bit-int"
+readme = "README.md"
+repository = "https://github.com/sorairolake/bit-int"
+license = "Apache-2.0 OR MIT"
+keywords = ["bit", "bitint", "integer", "numeric"]
+categories = ["data-structures", "no-std"]
+include = ["/LICENSES", "/README.md", "/src"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+num-traits = { version = "0.2.19", default-features = false }
+
+[lints.clippy]
+cargo = "warn"
+nursery = "warn"
+pedantic = "warn"
+
+[lints.rust]
+missing_debug_implementations = "deny"
+rust_2018_idioms = { level = "warn", priority = -1 }
