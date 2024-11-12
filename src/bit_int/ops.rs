@@ -122,11 +122,21 @@ mod tests {
     }
 
     #[test]
+    const fn checked_add_is_const_fn() {
+        const _: Option<BitI8<7>> = BitI8::<7>::MAX.checked_add(1);
+    }
+
+    #[test]
     fn checked_sub() {
         let n = BitI8::<7>::new(-42).unwrap();
 
         assert_eq!(n.checked_sub(22).map(BitI8::get), Some(-64));
         assert!(n.checked_sub(23).is_none());
+    }
+
+    #[test]
+    const fn checked_sub_is_const_fn() {
+        const _: Option<BitI8<7>> = BitI8::<7>::MIN.checked_sub(1);
     }
 
     #[test]
@@ -138,6 +148,11 @@ mod tests {
     }
 
     #[test]
+    const fn checked_mul_is_const_fn() {
+        const _: Option<BitI8<7>> = BitI8::<7>::MAX.checked_mul(2);
+    }
+
+    #[test]
     fn checked_div() {
         let n = BitI8::<7>::new(42).unwrap();
 
@@ -145,5 +160,10 @@ mod tests {
         assert!(n.checked_div(0).is_none());
 
         assert!(BitI8::<7>::MIN.checked_div(-1).is_none());
+    }
+
+    #[test]
+    const fn checked_div_is_const_fn() {
+        const _: Option<BitI8<7>> = BitI8::<7>::MAX.checked_div(0);
     }
 }

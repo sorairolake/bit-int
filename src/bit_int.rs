@@ -224,12 +224,51 @@ mod tests {
     }
 
     #[test]
+    const fn new_is_const_fn() {
+        const _: Option<BitI32<31>> = BitI32::<31>::new(i32::MAX >> 1);
+    }
+
+    #[test]
+    fn new_unchecked() {
+        assert_eq!(
+            unsafe { BitI8::<7>::new_unchecked(i8::MAX >> 1) }.get(),
+            i8::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitI16::<15>::new_unchecked(i16::MAX >> 1) }.get(),
+            i16::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitI32::<31>::new_unchecked(i32::MAX >> 1) }.get(),
+            i32::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitI64::<63>::new_unchecked(i64::MAX >> 1) }.get(),
+            i64::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitI128::<127>::new_unchecked(i128::MAX >> 1) }.get(),
+            i128::MAX >> 1
+        );
+    }
+
+    #[test]
+    const fn new_unchecked_is_const_fn() {
+        const _: BitI32<31> = unsafe { BitI32::<31>::new_unchecked(i32::MAX >> 1) };
+    }
+
+    #[test]
     fn get() {
         assert_eq!(BitI8::<7>::MAX.get(), i8::MAX >> 1);
         assert_eq!(BitI16::<15>::MAX.get(), i16::MAX >> 1);
         assert_eq!(BitI32::<31>::MAX.get(), i32::MAX >> 1);
         assert_eq!(BitI64::<63>::MAX.get(), i64::MAX >> 1);
         assert_eq!(BitI128::<127>::MAX.get(), i128::MAX >> 1);
+    }
+
+    #[test]
+    const fn get_is_const_fn() {
+        const _: i32 = BitI32::<31>::MIN.get();
     }
 
     #[test]
@@ -240,9 +279,19 @@ mod tests {
     }
 
     #[test]
+    const fn is_positive_is_const_fn() {
+        const _: bool = BitI32::<31>::MIN.is_positive();
+    }
+
+    #[test]
     fn is_negative() {
         assert!(BitI32::<31>::MIN.is_negative());
         assert!(!BitI32::<31>::default().is_negative());
         assert!(!BitI32::<31>::MAX.is_negative());
+    }
+
+    #[test]
+    const fn is_negative_is_const_fn() {
+        const _: bool = BitI32::<31>::MIN.is_positive();
     }
 }

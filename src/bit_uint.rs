@@ -193,11 +193,50 @@ mod tests {
     }
 
     #[test]
+    const fn new_is_const_fn() {
+        const _: Option<BitU32<31>> = BitU32::<31>::new(u32::MAX >> 1);
+    }
+
+    #[test]
+    fn new_unchecked() {
+        assert_eq!(
+            unsafe { BitU8::<7>::new_unchecked(u8::MAX >> 1) }.get(),
+            u8::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitU16::<15>::new_unchecked(u16::MAX >> 1) }.get(),
+            u16::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitU32::<31>::new_unchecked(u32::MAX >> 1) }.get(),
+            u32::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitU64::<63>::new_unchecked(u64::MAX >> 1) }.get(),
+            u64::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitU128::<127>::new_unchecked(u128::MAX >> 1) }.get(),
+            u128::MAX >> 1
+        );
+    }
+
+    #[test]
+    const fn new_unchecked_is_const_fn() {
+        const _: BitU32<31> = unsafe { BitU32::<31>::new_unchecked(u32::MAX >> 1) };
+    }
+
+    #[test]
     fn get() {
         assert_eq!(BitU8::<7>::MAX.get(), u8::MAX >> 1);
         assert_eq!(BitU16::<15>::MAX.get(), u16::MAX >> 1);
         assert_eq!(BitU32::<31>::MAX.get(), u32::MAX >> 1);
         assert_eq!(BitU64::<63>::MAX.get(), u64::MAX >> 1);
         assert_eq!(BitU128::<127>::MAX.get(), u128::MAX >> 1);
+    }
+
+    #[test]
+    const fn get_is_const_fn() {
+        const _: u32 = BitU32::<31>::MIN.get();
     }
 }
