@@ -20,6 +20,8 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 * Implement `BitInt::checked_rem` and `BitUint::checked_rem`
   ({pull-request-url}/7[#7])
+* Implement `From<BitInt>` and `From<BitUint>` for the underlying type
+  ({pull-request-url}/8[#8])
 
 == {project-url}/releases/tag/v0.1.0[0.1.0] - 2024-11-12
 

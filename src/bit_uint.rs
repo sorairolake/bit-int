@@ -6,6 +6,7 @@
 
 mod cmp;
 mod consts;
+mod convert;
 mod fmt;
 mod ops;
 
