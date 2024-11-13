@@ -204,6 +204,10 @@ mod tests {
             BitU128::<127>::new(u128::MAX >> 1).map(BitU128::get),
             Some(u128::MAX >> 1)
         );
+        assert_eq!(
+            BitUsize::<{ usize::BITS - 1 }>::new(usize::MAX >> 1).map(BitUsize::get),
+            Some(usize::MAX >> 1)
+        );
     }
 
     #[test]
@@ -213,6 +217,7 @@ mod tests {
         assert!(BitU32::<31>::new((u32::MAX >> 1) + 1).is_none());
         assert!(BitU64::<63>::new((u64::MAX >> 1) + 1).is_none());
         assert!(BitU128::<127>::new((u128::MAX >> 1) + 1).is_none());
+        assert!(BitUsize::<{ usize::BITS - 1 }>::new((usize::MAX >> 1) + 1).is_none());
     }
 
     #[test]
@@ -261,6 +266,10 @@ mod tests {
             unsafe { BitU128::<127>::new_unchecked(u128::MAX >> 1) }.get(),
             u128::MAX >> 1
         );
+        assert_eq!(
+            unsafe { BitUsize::<{ usize::BITS - 1 }>::new_unchecked(usize::MAX >> 1) }.get(),
+            usize::MAX >> 1
+        );
     }
 
     #[test]
@@ -275,6 +284,7 @@ mod tests {
         assert_eq!(BitU32::<31>::MAX.get(), u32::MAX >> 1);
         assert_eq!(BitU64::<63>::MAX.get(), u64::MAX >> 1);
         assert_eq!(BitU128::<127>::MAX.get(), u128::MAX >> 1);
+        assert_eq!(BitUsize::<{ usize::BITS - 1 }>::MAX.get(), usize::MAX >> 1);
     }
 
     #[test]

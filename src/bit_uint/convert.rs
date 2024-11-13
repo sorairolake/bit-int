@@ -25,7 +25,7 @@ impl_from_bit_uint_to_underlying_type!(usize);
 
 #[cfg(test)]
 mod tests {
-    use super::super::{BitU128, BitU16, BitU32, BitU64, BitU8};
+    use super::super::{BitU128, BitU16, BitU32, BitU64, BitU8, BitUsize};
 
     #[test]
     fn from_bit_uint_to_underlying_type() {
@@ -34,5 +34,9 @@ mod tests {
         assert_eq!(u32::from(BitU32::<31>::MAX), u32::MAX >> 1);
         assert_eq!(u64::from(BitU64::<63>::MAX), u64::MAX >> 1);
         assert_eq!(u128::from(BitU128::<127>::MAX), u128::MAX >> 1);
+        assert_eq!(
+            usize::from(BitUsize::<{ usize::BITS - 1 }>::MAX),
+            usize::MAX >> 1
+        );
     }
 }

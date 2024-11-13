@@ -235,6 +235,10 @@ mod tests {
             BitI128::<127>::new(i128::MAX >> 1).map(BitI128::get),
             Some(i128::MAX >> 1)
         );
+        assert_eq!(
+            BitIsize::<{ isize::BITS - 1 }>::new(isize::MAX >> 1).map(BitIsize::get),
+            Some(isize::MAX >> 1)
+        );
     }
 
     #[test]
@@ -244,6 +248,7 @@ mod tests {
         assert!(BitI32::<31>::new((i32::MAX >> 1) + 1).is_none());
         assert!(BitI64::<63>::new((i64::MAX >> 1) + 1).is_none());
         assert!(BitI128::<127>::new((i128::MAX >> 1) + 1).is_none());
+        assert!(BitIsize::<{ isize::BITS - 1 }>::new((isize::MAX >> 1) + 1).is_none());
     }
 
     #[test]
@@ -297,6 +302,10 @@ mod tests {
             unsafe { BitI128::<127>::new_unchecked(i128::MAX >> 1) }.get(),
             i128::MAX >> 1
         );
+        assert_eq!(
+            unsafe { BitIsize::<{ isize::BITS - 1 }>::new_unchecked(isize::MAX >> 1) }.get(),
+            isize::MAX >> 1
+        );
     }
 
     #[test]
@@ -311,6 +320,7 @@ mod tests {
         assert_eq!(BitI32::<31>::MAX.get(), i32::MAX >> 1);
         assert_eq!(BitI64::<63>::MAX.get(), i64::MAX >> 1);
         assert_eq!(BitI128::<127>::MAX.get(), i128::MAX >> 1);
+        assert_eq!(BitIsize::<{ isize::BITS - 1 }>::MAX.get(), isize::MAX >> 1);
     }
 
     #[test]

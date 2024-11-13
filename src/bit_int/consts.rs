@@ -57,7 +57,7 @@ impl_consts!(isize);
 
 #[cfg(test)]
 mod tests {
-    use super::super::{BitI128, BitI16, BitI32, BitI64, BitI8};
+    use super::super::{BitI128, BitI16, BitI32, BitI64, BitI8, BitIsize};
 
     #[test]
     fn min() {
@@ -66,6 +66,7 @@ mod tests {
         assert_eq!(BitI32::<31>::MIN.get(), i32::MIN >> 1);
         assert_eq!(BitI64::<63>::MIN.get(), i64::MIN >> 1);
         assert_eq!(BitI128::<127>::MIN.get(), i128::MIN >> 1);
+        assert_eq!(BitIsize::<{ isize::BITS - 1 }>::MIN.get(), isize::MIN >> 1);
     }
 
     #[test]
@@ -75,6 +76,7 @@ mod tests {
         assert_eq!(BitI32::<1>::MIN.get(), -1);
         assert_eq!(BitI64::<1>::MIN.get(), -1);
         assert_eq!(BitI128::<1>::MIN.get(), -1);
+        assert_eq!(BitIsize::<1>::MIN.get(), -1);
     }
 
     #[test]
@@ -84,6 +86,7 @@ mod tests {
         assert_eq!(BitI32::<{ i32::BITS }>::MIN.get(), i32::MIN);
         assert_eq!(BitI64::<{ i64::BITS }>::MIN.get(), i64::MIN);
         assert_eq!(BitI128::<{ i128::BITS }>::MIN.get(), i128::MIN);
+        assert_eq!(BitIsize::<{ isize::BITS }>::MIN.get(), isize::MIN);
     }
 
     #[test]
@@ -93,6 +96,7 @@ mod tests {
         assert_eq!(BitI32::<31>::MAX.get(), i32::MAX >> 1);
         assert_eq!(BitI64::<63>::MAX.get(), i64::MAX >> 1);
         assert_eq!(BitI128::<127>::MAX.get(), i128::MAX >> 1);
+        assert_eq!(BitIsize::<{ isize::BITS - 1 }>::MAX.get(), isize::MAX >> 1);
     }
 
     #[test]
@@ -102,6 +106,7 @@ mod tests {
         assert_eq!(BitI32::<1>::MAX.get(), 0);
         assert_eq!(BitI64::<1>::MAX.get(), 0);
         assert_eq!(BitI128::<1>::MAX.get(), 0);
+        assert_eq!(BitIsize::<1>::MAX.get(), 0);
     }
 
     #[test]
@@ -111,6 +116,7 @@ mod tests {
         assert_eq!(BitI32::<{ i32::BITS }>::MAX.get(), i32::MAX);
         assert_eq!(BitI64::<{ i64::BITS }>::MAX.get(), i64::MAX);
         assert_eq!(BitI128::<{ i128::BITS }>::MAX.get(), i128::MAX);
+        assert_eq!(BitIsize::<{ isize::BITS }>::MAX.get(), isize::MAX);
     }
 
     #[test]
@@ -120,6 +126,7 @@ mod tests {
         assert_eq!(BitI32::<31>::BITS, 31);
         assert_eq!(BitI64::<63>::BITS, 63);
         assert_eq!(BitI128::<127>::BITS, 127);
+        assert_eq!(BitIsize::<{ isize::BITS - 1 }>::BITS, isize::BITS - 1);
     }
 
     #[test]
@@ -129,6 +136,7 @@ mod tests {
         assert_eq!(BitI32::<1>::BITS, 1);
         assert_eq!(BitI64::<1>::BITS, 1);
         assert_eq!(BitI128::<1>::BITS, 1);
+        assert_eq!(BitIsize::<1>::BITS, 1);
     }
 
     #[test]
@@ -138,5 +146,6 @@ mod tests {
         assert_eq!(BitI32::<{ i32::BITS }>::BITS, i32::BITS);
         assert_eq!(BitI64::<{ i64::BITS }>::BITS, i64::BITS);
         assert_eq!(BitI128::<{ i128::BITS }>::BITS, i128::BITS);
+        assert_eq!(BitIsize::<{ isize::BITS }>::BITS, isize::BITS);
     }
 }
