@@ -9,7 +9,9 @@ use super::BitUint;
 macro_rules! impl_ops {
     ($T:ty) => {
         impl<const N: u32> BitUint<$T, N> {
-            /// Computes `self + rhs`, returning [`None`] if overflow occurred.
+            /// Calculates the addition of `self` and `rhs`.
+            ///
+            /// Returns [`None`] if overflow occurred.
             ///
             /// # Examples
             ///
@@ -31,7 +33,9 @@ macro_rules! impl_ops {
                 }
             }
 
-            /// Computes `self - rhs`, returning [`None`] if overflow occurred.
+            /// Calculates the subtraction of `rhs` from `self`.
+            ///
+            /// Returns [`None`] if overflow occurred.
             ///
             /// # Examples
             ///
@@ -53,7 +57,9 @@ macro_rules! impl_ops {
                 }
             }
 
-            /// Computes `self * rhs`, returning [`None`] if overflow occurred.
+            /// Calculates the multiplication of `self` and `rhs`.
+            ///
+            /// Returns [`None`] if overflow occurred.
             ///
             /// # Examples
             ///
@@ -75,7 +81,9 @@ macro_rules! impl_ops {
                 }
             }
 
-            /// Computes `self / rhs`, returning [`None`] if `rhs == 0`.
+            /// Calculates the divisor when `self` is divided by `rhs`.
+            ///
+            /// Returns [`None`] if `rhs` is `0`.
             ///
             /// # Examples
             ///
@@ -97,7 +105,9 @@ macro_rules! impl_ops {
                 }
             }
 
-            /// Computes `self % rhs`, returning [`None`] if `rhs == 0`.
+            /// Calculates the remainder when `self` is divided by `rhs`.
+            ///
+            /// Returns [`None`] if `rhs` is `0`.
             ///
             /// # Examples
             ///
