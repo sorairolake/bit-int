@@ -246,6 +246,30 @@ mod tests {
     }
 
     #[test]
+    fn new_when_one_bit_value() {
+        assert!(BitI32::<1>::new(-2).is_none());
+        assert_eq!(BitI32::<1>::new(-1).map(BitI32::get), Some(-1));
+        assert_eq!(BitI32::<1>::new(0).map(BitI32::get), Some(0));
+        assert!(BitI32::<1>::new(1).is_none());
+    }
+
+    #[test]
+    fn new_when_max_bits_value() {
+        assert_eq!(
+            BitI32::<{ i32::BITS }>::new(i32::MIN).map(BitI32::get),
+            Some(i32::MIN)
+        );
+        assert_eq!(
+            BitI32::<{ i32::BITS }>::new(i32::default()).map(BitI32::get),
+            Some(i32::default())
+        );
+        assert_eq!(
+            BitI32::<{ i32::BITS }>::new(i32::MAX).map(BitI32::get),
+            Some(i32::MAX)
+        );
+    }
+
+    #[test]
     const fn new_is_const_fn() {
         const _: Option<BitI32<31>> = BitI32::<31>::new(i32::MAX >> 1);
     }

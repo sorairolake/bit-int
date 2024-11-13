@@ -69,6 +69,24 @@ mod tests {
     }
 
     #[test]
+    fn min_when_one_bit() {
+        assert_eq!(BitI8::<1>::MIN.get(), -1);
+        assert_eq!(BitI16::<1>::MIN.get(), -1);
+        assert_eq!(BitI32::<1>::MIN.get(), -1);
+        assert_eq!(BitI64::<1>::MIN.get(), -1);
+        assert_eq!(BitI128::<1>::MIN.get(), -1);
+    }
+
+    #[test]
+    fn min_when_max_bits() {
+        assert_eq!(BitI8::<{ i8::BITS }>::MIN.get(), i8::MIN);
+        assert_eq!(BitI16::<{ i16::BITS }>::MIN.get(), i16::MIN);
+        assert_eq!(BitI32::<{ i32::BITS }>::MIN.get(), i32::MIN);
+        assert_eq!(BitI64::<{ i64::BITS }>::MIN.get(), i64::MIN);
+        assert_eq!(BitI128::<{ i128::BITS }>::MIN.get(), i128::MIN);
+    }
+
+    #[test]
     fn max() {
         assert_eq!(BitI8::<7>::MAX.get(), i8::MAX >> 1);
         assert_eq!(BitI16::<15>::MAX.get(), i16::MAX >> 1);
@@ -78,11 +96,47 @@ mod tests {
     }
 
     #[test]
+    fn max_when_one_bit() {
+        assert_eq!(BitI8::<1>::MAX.get(), 0);
+        assert_eq!(BitI16::<1>::MAX.get(), 0);
+        assert_eq!(BitI32::<1>::MAX.get(), 0);
+        assert_eq!(BitI64::<1>::MAX.get(), 0);
+        assert_eq!(BitI128::<1>::MAX.get(), 0);
+    }
+
+    #[test]
+    fn max_when_max_bits() {
+        assert_eq!(BitI8::<{ i8::BITS }>::MAX.get(), i8::MAX);
+        assert_eq!(BitI16::<{ i16::BITS }>::MAX.get(), i16::MAX);
+        assert_eq!(BitI32::<{ i32::BITS }>::MAX.get(), i32::MAX);
+        assert_eq!(BitI64::<{ i64::BITS }>::MAX.get(), i64::MAX);
+        assert_eq!(BitI128::<{ i128::BITS }>::MAX.get(), i128::MAX);
+    }
+
+    #[test]
     fn bits() {
         assert_eq!(BitI8::<7>::BITS, 7);
         assert_eq!(BitI16::<15>::BITS, 15);
         assert_eq!(BitI32::<31>::BITS, 31);
         assert_eq!(BitI64::<63>::BITS, 63);
         assert_eq!(BitI128::<127>::BITS, 127);
+    }
+
+    #[test]
+    fn bits_when_one_bit() {
+        assert_eq!(BitI8::<1>::BITS, 1);
+        assert_eq!(BitI16::<1>::BITS, 1);
+        assert_eq!(BitI32::<1>::BITS, 1);
+        assert_eq!(BitI64::<1>::BITS, 1);
+        assert_eq!(BitI128::<1>::BITS, 1);
+    }
+
+    #[test]
+    fn bits_when_max_bits() {
+        assert_eq!(BitI8::<{ i8::BITS }>::BITS, i8::BITS);
+        assert_eq!(BitI16::<{ i16::BITS }>::BITS, i16::BITS);
+        assert_eq!(BitI32::<{ i32::BITS }>::BITS, i32::BITS);
+        assert_eq!(BitI64::<{ i64::BITS }>::BITS, i64::BITS);
+        assert_eq!(BitI128::<{ i128::BITS }>::BITS, i128::BITS);
     }
 }
