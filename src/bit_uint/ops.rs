@@ -96,6 +96,28 @@ macro_rules! impl_ops {
                     None
                 }
             }
+
+            /// Computes `self % rhs`, returning [`None`] if `rhs == 0`.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitUint;
+            /// #
+            #[doc = concat!("let n = BitUint::<", stringify!($T), ", 3>::new(5).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_rem(2).map(BitUint::get), Some(1));
+            /// assert!(n.checked_rem(0).is_none());
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_rem(self, rhs: $T) -> Option<Self> {
+                if let Some(result) = self.get().checked_rem(rhs) {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
         }
     };
 }
@@ -160,5 +182,18 @@ mod tests {
     #[test]
     const fn checked_div_is_const_fn() {
         const _: Option<BitU8<6>> = BitU8::<6>::MAX.checked_div(0);
+    }
+
+    #[test]
+    fn checked_rem() {
+        let n = BitU8::<3>::new(5).unwrap();
+
+        assert_eq!(n.checked_rem(2).map(BitU8::get), Some(1));
+        assert!(n.checked_rem(0).is_none());
+    }
+
+    #[test]
+    const fn checked_rem_is_const_fn() {
+        const _: Option<BitU8<3>> = BitU8::<3>::MAX.checked_rem(0);
     }
 }

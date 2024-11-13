@@ -64,3 +64,17 @@ fn checked_div_bit_uint(b: &mut Bencher) {
 
     b.iter(|| n.checked_div(2));
 }
+
+#[bench]
+fn checked_rem_bit_int(b: &mut Bencher) {
+    let n = BitI32::<31>::new(5).unwrap();
+
+    b.iter(|| n.checked_rem(2));
+}
+
+#[bench]
+fn checked_rem_bit_uint(b: &mut Bencher) {
+    let n = BitU32::<31>::new(5).unwrap();
+
+    b.iter(|| n.checked_rem(2));
+}

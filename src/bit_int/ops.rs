@@ -87,7 +87,6 @@ macro_rules! impl_ops {
             ///
             /// assert_eq!(n.checked_div(2).map(BitInt::get), Some(21));
             /// assert!(n.checked_div(0).is_none());
-            ///
             #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 7>::MIN.checked_div(-1).is_none());")]
             /// ```
             #[must_use]
@@ -97,6 +96,29 @@ macro_rules! impl_ops {
                     Self::new(result)
                 } else {
                     None
+                }
+            }
+
+            /// Computes `self % rhs`, returning [`None`] if `rhs == 0` or the division
+            /// results in overflow.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitInt;
+            /// #
+            #[doc = concat!("let n = BitInt::<", stringify!($T), ", 4>::new(5).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_rem(2).map(BitInt::get), Some(1));
+            /// assert!(n.checked_rem(0).is_none());
+            #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 4>::MIN.checked_rem(-1).is_none());")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_rem(self, rhs: $T) -> Option<Self> {
+                match self.get().checked_rem(rhs) {
+                    Some(result) if self.checked_div(rhs).is_some() => Self::new(result),
+                    _ => None,
                 }
             }
         }
@@ -158,12 +180,25 @@ mod tests {
 
         assert_eq!(n.checked_div(2).map(BitI8::get), Some(21));
         assert!(n.checked_div(0).is_none());
-
         assert!(BitI8::<7>::MIN.checked_div(-1).is_none());
     }
 
     #[test]
     const fn checked_div_is_const_fn() {
         const _: Option<BitI8<7>> = BitI8::<7>::MAX.checked_div(0);
+    }
+
+    #[test]
+    fn checked_rem() {
+        let n = BitI8::<4>::new(5).unwrap();
+
+        assert_eq!(n.checked_rem(2).map(BitI8::get), Some(1));
+        assert!(n.checked_rem(0).is_none());
+        assert!(BitI8::<4>::MIN.checked_rem(-1).is_none());
+    }
+
+    #[test]
+    const fn checked_rem_is_const_fn() {
+        const _: Option<BitI8<4>> = BitI8::<4>::MAX.checked_rem(0);
     }
 }

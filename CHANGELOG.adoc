@@ -14,6 +14,13 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.1.0\...HEAD[Unreleased]
+
+=== Added
+
+* Implement `BitInt::checked_rem` and `BitUint::checked_rem`
+  ({pull-request-url}/7[#7])
+
 == {project-url}/releases/tag/v0.1.0[0.1.0] - 2024-11-12
 
 === Added
