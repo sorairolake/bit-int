@@ -60,7 +60,7 @@ impl_consts!(usize);
 
 #[cfg(test)]
 mod tests {
-    use super::super::{BitU128, BitU16, BitU32, BitU64, BitU8};
+    use super::super::{BitU128, BitU16, BitU32, BitU64, BitU8, BitUsize};
 
     #[test]
     fn min() {
@@ -69,6 +69,27 @@ mod tests {
         assert_eq!(BitU32::<31>::MIN.get(), u32::MIN);
         assert_eq!(BitU64::<63>::MIN.get(), u64::MIN);
         assert_eq!(BitU128::<127>::MIN.get(), u128::MIN);
+        assert_eq!(BitUsize::<{ usize::BITS - 1 }>::MIN.get(), usize::MIN);
+    }
+
+    #[test]
+    fn min_when_one_bit() {
+        assert_eq!(BitU8::<1>::MIN.get(), u8::MIN);
+        assert_eq!(BitU16::<1>::MIN.get(), u16::MIN);
+        assert_eq!(BitU32::<1>::MIN.get(), u32::MIN);
+        assert_eq!(BitU64::<1>::MIN.get(), u64::MIN);
+        assert_eq!(BitU128::<1>::MIN.get(), u128::MIN);
+        assert_eq!(BitUsize::<1>::MIN.get(), usize::MIN);
+    }
+
+    #[test]
+    fn min_when_max_bits() {
+        assert_eq!(BitU8::<{ u8::BITS }>::MIN.get(), u8::MIN);
+        assert_eq!(BitU16::<{ u16::BITS }>::MIN.get(), u16::MIN);
+        assert_eq!(BitU32::<{ u32::BITS }>::MIN.get(), u32::MIN);
+        assert_eq!(BitU64::<{ u64::BITS }>::MIN.get(), u64::MIN);
+        assert_eq!(BitU128::<{ u128::BITS }>::MIN.get(), u128::MIN);
+        assert_eq!(BitUsize::<{ usize::BITS }>::MIN.get(), usize::MIN);
     }
 
     #[test]
@@ -78,6 +99,27 @@ mod tests {
         assert_eq!(BitU32::<31>::MAX.get(), u32::MAX >> 1);
         assert_eq!(BitU64::<63>::MAX.get(), u64::MAX >> 1);
         assert_eq!(BitU128::<127>::MAX.get(), u128::MAX >> 1);
+        assert_eq!(BitUsize::<{ usize::BITS - 1 }>::MAX.get(), usize::MAX >> 1);
+    }
+
+    #[test]
+    fn max_when_one_bit() {
+        assert_eq!(BitU8::<1>::MAX.get(), 1);
+        assert_eq!(BitU16::<1>::MAX.get(), 1);
+        assert_eq!(BitU32::<1>::MAX.get(), 1);
+        assert_eq!(BitU64::<1>::MAX.get(), 1);
+        assert_eq!(BitU128::<1>::MAX.get(), 1);
+        assert_eq!(BitUsize::<1>::MAX.get(), 1);
+    }
+
+    #[test]
+    fn max_when_max_bits() {
+        assert_eq!(BitU8::<{ u8::BITS }>::MAX.get(), u8::MAX);
+        assert_eq!(BitU16::<{ u16::BITS }>::MAX.get(), u16::MAX);
+        assert_eq!(BitU32::<{ u32::BITS }>::MAX.get(), u32::MAX);
+        assert_eq!(BitU64::<{ u64::BITS }>::MAX.get(), u64::MAX);
+        assert_eq!(BitU128::<{ u128::BITS }>::MAX.get(), u128::MAX);
+        assert_eq!(BitUsize::<{ usize::BITS }>::MAX.get(), usize::MAX);
     }
 
     #[test]
@@ -87,5 +129,26 @@ mod tests {
         assert_eq!(BitU32::<31>::BITS, 31);
         assert_eq!(BitU64::<63>::BITS, 63);
         assert_eq!(BitU128::<127>::BITS, 127);
+        assert_eq!(BitUsize::<{ usize::BITS - 1 }>::BITS, usize::BITS - 1);
+    }
+
+    #[test]
+    fn bits_when_one_bit() {
+        assert_eq!(BitU8::<1>::BITS, 1);
+        assert_eq!(BitU16::<1>::BITS, 1);
+        assert_eq!(BitU32::<1>::BITS, 1);
+        assert_eq!(BitU64::<1>::BITS, 1);
+        assert_eq!(BitU128::<1>::BITS, 1);
+        assert_eq!(BitUsize::<1>::BITS, 1);
+    }
+
+    #[test]
+    fn bits_when_max_bits() {
+        assert_eq!(BitU8::<{ u8::BITS }>::BITS, u8::BITS);
+        assert_eq!(BitU16::<{ u16::BITS }>::BITS, u16::BITS);
+        assert_eq!(BitU32::<{ u32::BITS }>::BITS, u32::BITS);
+        assert_eq!(BitU64::<{ u64::BITS }>::BITS, u64::BITS);
+        assert_eq!(BitU128::<{ u128::BITS }>::BITS, u128::BITS);
+        assert_eq!(BitUsize::<{ usize::BITS }>::BITS, usize::BITS);
     }
 }

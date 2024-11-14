@@ -21,7 +21,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-bit-int = "0.1.0"
+bit-int = "0.1.1"
 ```
 
 ### Documentation

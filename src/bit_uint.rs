@@ -6,6 +6,7 @@
 
 mod cmp;
 mod consts;
+mod convert;
 mod fmt;
 mod ops;
 
@@ -13,15 +14,37 @@ use num_traits::{PrimInt, Unsigned};
 
 /// `BitUint` is a type that represents a `N`-bit unsigned integer.
 ///
-/// The largest size of `N` is equal to the size of the underlying type in bits.
+/// `N` is the number of bits in the value. The largest size of `N` is equal to
+/// the size of the underlying type in bits.
 ///
 /// # Examples
 ///
-/// ```compile_fail
-/// use bit_int::BitUint;
+/// ```
+/// # use bit_int::BitUint;
+/// #
+/// type Uint = BitUint<u8, 7>;
 ///
-/// let n = BitUint::<u32, 33>::new(42);
-/// assert_eq!(n.map(BitUint::get), Some(42));
+/// let n = Uint::new(127).unwrap();
+/// assert_eq!(n, Uint::MAX);
+///
+/// assert!(n.checked_add(1).is_none());
+/// assert_eq!(n.get().checked_add(1), Some(128));
+/// ```
+///
+/// In this case, `N` must be less than or equal to [`u32::BITS`]:
+///
+/// ```compile_fail
+/// # use bit_int::BitUint;
+/// #
+/// let _ = BitUint::<u32, 33>::new(42);
+/// ```
+///
+/// `N` must be greater than `0`:
+///
+/// ```compile_fail
+/// # use bit_int::BitUint;
+/// #
+/// let _ = BitUint::<u64, 0>::new(0);
 /// ```
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(transparent)]
@@ -181,6 +204,10 @@ mod tests {
             BitU128::<127>::new(u128::MAX >> 1).map(BitU128::get),
             Some(u128::MAX >> 1)
         );
+        assert_eq!(
+            BitUsize::<{ usize::BITS - 1 }>::new(usize::MAX >> 1).map(BitUsize::get),
+            Some(usize::MAX >> 1)
+        );
     }
 
     #[test]
@@ -190,6 +217,64 @@ mod tests {
         assert!(BitU32::<31>::new((u32::MAX >> 1) + 1).is_none());
         assert!(BitU64::<63>::new((u64::MAX >> 1) + 1).is_none());
         assert!(BitU128::<127>::new((u128::MAX >> 1) + 1).is_none());
+        assert!(BitUsize::<{ usize::BITS - 1 }>::new((usize::MAX >> 1) + 1).is_none());
+    }
+
+    #[test]
+    fn new_when_one_bit_value() {
+        assert_eq!(BitU32::<1>::new(0).map(BitU32::get), Some(0));
+        assert_eq!(BitU32::<1>::new(1).map(BitU32::get), Some(1));
+        assert!(BitU32::<1>::new(2).is_none());
+    }
+
+    #[test]
+    fn new_when_max_bits_value() {
+        assert_eq!(
+            BitU32::<{ u32::BITS }>::new(u32::MIN).map(BitU32::get),
+            Some(u32::MIN)
+        );
+        assert_eq!(
+            BitU32::<{ u32::BITS }>::new(u32::MAX).map(BitU32::get),
+            Some(u32::MAX)
+        );
+    }
+
+    #[test]
+    const fn new_is_const_fn() {
+        const _: Option<BitU32<31>> = BitU32::<31>::new(u32::MAX >> 1);
+    }
+
+    #[test]
+    fn new_unchecked() {
+        assert_eq!(
+            unsafe { BitU8::<7>::new_unchecked(u8::MAX >> 1) }.get(),
+            u8::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitU16::<15>::new_unchecked(u16::MAX >> 1) }.get(),
+            u16::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitU32::<31>::new_unchecked(u32::MAX >> 1) }.get(),
+            u32::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitU64::<63>::new_unchecked(u64::MAX >> 1) }.get(),
+            u64::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitU128::<127>::new_unchecked(u128::MAX >> 1) }.get(),
+            u128::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitUsize::<{ usize::BITS - 1 }>::new_unchecked(usize::MAX >> 1) }.get(),
+            usize::MAX >> 1
+        );
+    }
+
+    #[test]
+    const fn new_unchecked_is_const_fn() {
+        const _: BitU32<31> = unsafe { BitU32::<31>::new_unchecked(u32::MAX >> 1) };
     }
 
     #[test]
@@ -199,5 +284,11 @@ mod tests {
         assert_eq!(BitU32::<31>::MAX.get(), u32::MAX >> 1);
         assert_eq!(BitU64::<63>::MAX.get(), u64::MAX >> 1);
         assert_eq!(BitU128::<127>::MAX.get(), u128::MAX >> 1);
+        assert_eq!(BitUsize::<{ usize::BITS - 1 }>::MAX.get(), usize::MAX >> 1);
+    }
+
+    #[test]
+    const fn get_is_const_fn() {
+        const _: u32 = BitU32::<31>::MIN.get();
     }
 }

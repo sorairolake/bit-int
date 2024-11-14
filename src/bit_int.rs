@@ -6,6 +6,7 @@
 
 mod cmp;
 mod consts;
+mod convert;
 mod fmt;
 mod ops;
 
@@ -13,15 +14,37 @@ use num_traits::{PrimInt, Signed};
 
 /// `BitInt` is a type that represents a `N`-bit signed integer.
 ///
-/// The largest size of `N` is equal to the size of the underlying type in bits.
+/// `N` is the number of bits in the value, including the sign bit. The largest
+/// size of `N` is equal to the size of the underlying type in bits.
 ///
 /// # Examples
 ///
-/// ```compile_fail
-/// use bit_int::BitInt;
+/// ```
+/// # use bit_int::BitInt;
+/// #
+/// type Int = BitInt<i8, 7>;
 ///
-/// let n = BitInt::<i32, 33>::new(42);
-/// assert_eq!(n.map(BitInt::get), Some(42));
+/// let n = Int::new(-64).unwrap();
+/// assert_eq!(n, Int::MIN);
+///
+/// assert!(n.checked_sub(1).is_none());
+/// assert_eq!(n.get().checked_sub(1), Some(-65));
+/// ```
+///
+/// In this case, `N` must be less than or equal to [`i32::BITS`]:
+///
+/// ```compile_fail
+/// # use bit_int::BitInt;
+/// #
+/// let _ = BitInt::<i32, 33>::new(42);
+/// ```
+///
+/// `N` must be greater than `0`:
+///
+/// ```compile_fail
+/// # use bit_int::BitInt;
+/// #
+/// let _ = BitInt::<i64, 0>::new(0);
 /// ```
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(transparent)]
@@ -212,6 +235,10 @@ mod tests {
             BitI128::<127>::new(i128::MAX >> 1).map(BitI128::get),
             Some(i128::MAX >> 1)
         );
+        assert_eq!(
+            BitIsize::<{ isize::BITS - 1 }>::new(isize::MAX >> 1).map(BitIsize::get),
+            Some(isize::MAX >> 1)
+        );
     }
 
     #[test]
@@ -221,6 +248,69 @@ mod tests {
         assert!(BitI32::<31>::new((i32::MAX >> 1) + 1).is_none());
         assert!(BitI64::<63>::new((i64::MAX >> 1) + 1).is_none());
         assert!(BitI128::<127>::new((i128::MAX >> 1) + 1).is_none());
+        assert!(BitIsize::<{ isize::BITS - 1 }>::new((isize::MAX >> 1) + 1).is_none());
+    }
+
+    #[test]
+    fn new_when_one_bit_value() {
+        assert!(BitI32::<1>::new(-2).is_none());
+        assert_eq!(BitI32::<1>::new(-1).map(BitI32::get), Some(-1));
+        assert_eq!(BitI32::<1>::new(0).map(BitI32::get), Some(0));
+        assert!(BitI32::<1>::new(1).is_none());
+    }
+
+    #[test]
+    fn new_when_max_bits_value() {
+        assert_eq!(
+            BitI32::<{ i32::BITS }>::new(i32::MIN).map(BitI32::get),
+            Some(i32::MIN)
+        );
+        assert_eq!(
+            BitI32::<{ i32::BITS }>::new(i32::default()).map(BitI32::get),
+            Some(i32::default())
+        );
+        assert_eq!(
+            BitI32::<{ i32::BITS }>::new(i32::MAX).map(BitI32::get),
+            Some(i32::MAX)
+        );
+    }
+
+    #[test]
+    const fn new_is_const_fn() {
+        const _: Option<BitI32<31>> = BitI32::<31>::new(i32::MAX >> 1);
+    }
+
+    #[test]
+    fn new_unchecked() {
+        assert_eq!(
+            unsafe { BitI8::<7>::new_unchecked(i8::MAX >> 1) }.get(),
+            i8::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitI16::<15>::new_unchecked(i16::MAX >> 1) }.get(),
+            i16::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitI32::<31>::new_unchecked(i32::MAX >> 1) }.get(),
+            i32::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitI64::<63>::new_unchecked(i64::MAX >> 1) }.get(),
+            i64::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitI128::<127>::new_unchecked(i128::MAX >> 1) }.get(),
+            i128::MAX >> 1
+        );
+        assert_eq!(
+            unsafe { BitIsize::<{ isize::BITS - 1 }>::new_unchecked(isize::MAX >> 1) }.get(),
+            isize::MAX >> 1
+        );
+    }
+
+    #[test]
+    const fn new_unchecked_is_const_fn() {
+        const _: BitI32<31> = unsafe { BitI32::<31>::new_unchecked(i32::MAX >> 1) };
     }
 
     #[test]
@@ -230,6 +320,12 @@ mod tests {
         assert_eq!(BitI32::<31>::MAX.get(), i32::MAX >> 1);
         assert_eq!(BitI64::<63>::MAX.get(), i64::MAX >> 1);
         assert_eq!(BitI128::<127>::MAX.get(), i128::MAX >> 1);
+        assert_eq!(BitIsize::<{ isize::BITS - 1 }>::MAX.get(), isize::MAX >> 1);
+    }
+
+    #[test]
+    const fn get_is_const_fn() {
+        const _: i32 = BitI32::<31>::MIN.get();
     }
 
     #[test]
@@ -240,9 +336,19 @@ mod tests {
     }
 
     #[test]
+    const fn is_positive_is_const_fn() {
+        const _: bool = BitI32::<31>::MIN.is_positive();
+    }
+
+    #[test]
     fn is_negative() {
         assert!(BitI32::<31>::MIN.is_negative());
         assert!(!BitI32::<31>::default().is_negative());
         assert!(!BitI32::<31>::MAX.is_negative());
+    }
+
+    #[test]
+    const fn is_negative_is_const_fn() {
+        const _: bool = BitI32::<31>::MIN.is_positive();
     }
 }

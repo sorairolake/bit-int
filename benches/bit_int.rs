@@ -20,6 +20,11 @@ fn new(b: &mut Bencher) {
 }
 
 #[bench]
+fn new_unchecked(b: &mut Bencher) {
+    b.iter(|| unsafe { BitI32::<31>::new_unchecked(i32::MAX >> 1) });
+}
+
+#[bench]
 fn get(b: &mut Bencher) {
     b.iter(|| BitI32::<31>::MAX.get());
 }
