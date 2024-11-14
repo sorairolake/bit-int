@@ -140,7 +140,6 @@ macro_rules! impl_ops {
             /// ```
             /// # use bit_int::BitUint;
             /// #
-            ///
             /// assert_eq!(
             #[doc = concat!("    BitUint::<", stringify!($T), ", 1>::MIN.checked_neg().map(BitUint::get),")]
             ///     Some(0)
