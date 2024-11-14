@@ -129,6 +129,78 @@ macro_rules! impl_ops {
                     _ => None,
                 }
             }
+
+            /// Negates `self`.
+            ///
+            /// Returns [`None`] if `self` is [`Self::MIN`].
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitInt;
+            /// #
+            #[doc = concat!("let n = BitInt::<", stringify!($T), ", 4>::new(5).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_neg().map(BitInt::get), Some(-5));
+            #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 4>::MIN.checked_neg().is_none());")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_neg(self) -> Option<Self> {
+                if let Some(result) = self.get().checked_neg() {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
+
+            /// Computes the absolute value of `self`.
+            ///
+            /// Returns [`None`] if `self` is [`Self::MIN`].
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitInt;
+            /// #
+            #[doc = concat!("let n = BitInt::<", stringify!($T), ", 4>::new(-5).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_abs().map(BitInt::get), Some(5));
+            #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 4>::MIN.checked_abs().is_none());")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_abs(self) -> Option<Self> {
+                if let Some(result) = self.get().checked_abs() {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
+
+            /// Raises `self` to the power of `exp`, using exponentiation by squaring.
+            ///
+            /// Returns [`None`] if overflow occurred.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitInt;
+            /// #
+            #[doc = concat!("let n = BitInt::<", stringify!($T), ", 8>::new(8).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_pow(2).map(BitInt::get), Some(64));
+            #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 8>::MAX.checked_pow(2).is_none());")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_pow(self, exp: u32) -> Option<Self> {
+                if let Some(result) = self.get().checked_pow(exp) {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
         }
     };
 }
@@ -208,5 +280,44 @@ mod tests {
     #[test]
     const fn checked_rem_is_const_fn() {
         const _: Option<BitI8<4>> = BitI8::<4>::MAX.checked_rem(0);
+    }
+
+    #[test]
+    fn checked_neg() {
+        let n = BitI8::<4>::new(5).unwrap();
+
+        assert_eq!(n.checked_neg().map(BitI8::get), Some(-5));
+        assert!(BitI8::<4>::MIN.checked_neg().is_none());
+    }
+
+    #[test]
+    const fn checked_neg_is_const_fn() {
+        const _: Option<BitI8<4>> = BitI8::<4>::MIN.checked_neg();
+    }
+
+    #[test]
+    fn checked_abs() {
+        let n = BitI8::<4>::new(-5).unwrap();
+
+        assert_eq!(n.checked_abs().map(BitI8::get), Some(5));
+        assert!(BitI8::<4>::MIN.checked_abs().is_none());
+    }
+
+    #[test]
+    const fn checked_abs_is_const_fn() {
+        const _: Option<BitI8<4>> = BitI8::<4>::MIN.checked_abs();
+    }
+
+    #[test]
+    fn checked_pow() {
+        let n = BitI8::<8>::new(8).unwrap();
+
+        assert_eq!(n.checked_pow(2).map(BitI8::get), Some(64));
+        assert!(BitI8::<8>::MAX.checked_pow(2).is_none());
+    }
+
+    #[test]
+    const fn checked_pow_is_const_fn() {
+        const _: Option<BitI8<8>> = BitI8::<8>::MAX.checked_pow(2);
     }
 }

@@ -128,6 +128,58 @@ macro_rules! impl_ops {
                     None
                 }
             }
+
+            /// Negates `self`.
+            ///
+            /// Returns [`None`] unless `self` is `0`.
+            ///
+            /// Note that negating any positive integer will overflow.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitUint;
+            /// #
+            ///
+            /// assert_eq!(
+            #[doc = concat!("    BitUint::<", stringify!($T), ", 1>::MIN.checked_neg().map(BitUint::get),")]
+            ///     Some(0)
+            /// );
+            #[doc = concat!("assert!(BitUint::<", stringify!($T), ", 1>::MAX.checked_neg().is_none());")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_neg(self) -> Option<Self> {
+                if let Some(result) = self.get().checked_neg() {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
+
+            /// Raises `self` to the power of `exp`, using exponentiation by squaring.
+            ///
+            /// Returns [`None`] if overflow occurred.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitUint;
+            /// #
+            #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(2).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_pow(5).map(BitUint::get), Some(32));
+            #[doc = concat!("assert!(BitUint::<", stringify!($T), ", 6>::MAX.checked_pow(2).is_none());")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_pow(self, exp: u32) -> Option<Self> {
+                if let Some(result) = self.get().checked_pow(exp) {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
         }
     };
 }
@@ -205,5 +257,29 @@ mod tests {
     #[test]
     const fn checked_rem_is_const_fn() {
         const _: Option<BitU8<3>> = BitU8::<3>::MAX.checked_rem(0);
+    }
+
+    #[test]
+    fn checked_neg() {
+        assert_eq!(BitU8::<1>::MIN.checked_neg().map(BitU8::get), Some(0));
+        assert!(BitU8::<1>::MAX.checked_neg().is_none());
+    }
+
+    #[test]
+    const fn checked_neg_is_const_fn() {
+        const _: Option<BitU8<1>> = BitU8::<1>::MAX.checked_neg();
+    }
+
+    #[test]
+    fn checked_pow() {
+        let n = BitU8::<6>::new(2).unwrap();
+
+        assert_eq!(n.checked_pow(5).map(BitU8::get), Some(32));
+        assert!(BitU8::<6>::MAX.checked_pow(2).is_none());
+    }
+
+    #[test]
+    const fn checked_pow_is_const_fn() {
+        const _: Option<BitU8<6>> = BitU8::<6>::MAX.checked_pow(2);
     }
 }
