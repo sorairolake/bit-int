@@ -14,6 +14,21 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.1.1\...HEAD[Unreleased]
+
+=== Added
+
+* Add `BitInt::checked_ilog` and `BitUint::checked_ilog`
+  ({pull-request-url}/12[#12])
+* Add `BitInt::checked_ilog2` and `BitUint::checked_ilog2`
+  ({pull-request-url}/12[#12])
+* Add `BitInt::checked_ilog10` and `BitUint::checked_ilog10`
+  ({pull-request-url}/12[#12])
+
+=== Changed
+
+* Bump MSRV to 1.67.0 ({pull-request-url}/12[#12])
+
 == {compare-url}/v0.1.0\...v0.1.1[0.1.1] - 2024-11-14
 
 === Added

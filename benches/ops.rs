@@ -80,6 +80,48 @@ fn checked_rem_bit_uint(b: &mut Bencher) {
 }
 
 #[bench]
+fn checked_ilog_bit_int(b: &mut Bencher) {
+    let n = BitI32::<31>::new(5).unwrap();
+
+    b.iter(|| n.checked_ilog(5));
+}
+
+#[bench]
+fn checked_ilog_bit_uint(b: &mut Bencher) {
+    let n = BitU32::<31>::new(5).unwrap();
+
+    b.iter(|| n.checked_ilog(5));
+}
+
+#[bench]
+fn checked_ilog2_bit_int(b: &mut Bencher) {
+    let n = BitI32::<31>::new(2).unwrap();
+
+    b.iter(|| n.checked_ilog2());
+}
+
+#[bench]
+fn checked_ilog2_bit_uint(b: &mut Bencher) {
+    let n = BitU32::<31>::new(2).unwrap();
+
+    b.iter(|| n.checked_ilog2());
+}
+
+#[bench]
+fn checked_ilog10_bit_int(b: &mut Bencher) {
+    let n = BitI32::<31>::new(10).unwrap();
+
+    b.iter(|| n.checked_ilog10());
+}
+
+#[bench]
+fn checked_ilog10_bit_uint(b: &mut Bencher) {
+    let n = BitU32::<31>::new(10).unwrap();
+
+    b.iter(|| n.checked_ilog10());
+}
+
+#[bench]
 fn checked_neg_bit_int(b: &mut Bencher) {
     let n = BitI32::<31>::new(5).unwrap();
 

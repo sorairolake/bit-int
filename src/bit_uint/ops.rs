@@ -129,6 +129,65 @@ macro_rules! impl_ops {
                 }
             }
 
+            /// Returns the logarithm of the number with respect to an arbitrary base,
+            /// rounded down.
+            ///
+            /// Returns [`None`] if the number is zero, or if the base is not at least
+            /// 2.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitUint;
+            /// #
+            #[doc = concat!("let n = BitUint::<", stringify!($T), ", 3>::new(5).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_ilog(5), Some(1));
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_ilog(self, base: $T) -> Option<u32> {
+                self.get().checked_ilog(base)
+            }
+
+            /// Returns the base 2 logarithm of the number, rounded down.
+            ///
+            /// Returns [`None`] if the number is zero.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitUint;
+            /// #
+            #[doc = concat!("let n = BitUint::<", stringify!($T), ", 2>::new(2).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_ilog2(), Some(1));
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_ilog2(self) -> Option<u32> {
+                self.get().checked_ilog2()
+            }
+
+            /// Returns the base 10 logarithm of the number, rounded down.
+            ///
+            /// Returns [`None`] if the number is zero.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitUint;
+            /// #
+            #[doc = concat!("let n = BitUint::<", stringify!($T), ", 4>::new(10).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_ilog10(), Some(1));
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_ilog10(self) -> Option<u32> {
+                self.get().checked_ilog10()
+            }
+
             /// Negates `self`.
             ///
             /// Returns [`None`] unless `self` is `0`.
@@ -256,6 +315,46 @@ mod tests {
     #[test]
     const fn checked_rem_is_const_fn() {
         const _: Option<BitU8<3>> = BitU8::<3>::MAX.checked_rem(0);
+    }
+
+    #[test]
+    fn checked_ilog() {
+        let n = BitU8::<3>::new(5).unwrap();
+
+        assert_eq!(n.checked_ilog(5), Some(1));
+        assert!(n.checked_ilog(1).is_none());
+        assert!(BitU8::<3>::MIN.checked_ilog(5).is_none());
+    }
+
+    #[test]
+    const fn checked_ilog_is_const_fn() {
+        const _: Option<u32> = BitU8::<3>::MIN.checked_ilog(5);
+    }
+
+    #[test]
+    fn checked_ilog2() {
+        let n = BitU8::<2>::new(2).unwrap();
+
+        assert_eq!(n.checked_ilog2(), Some(1));
+        assert!(BitU8::<2>::MIN.checked_ilog2().is_none());
+    }
+
+    #[test]
+    const fn checked_ilog2_is_const_fn() {
+        const _: Option<u32> = BitU8::<2>::MIN.checked_ilog2();
+    }
+
+    #[test]
+    fn checked_ilog10() {
+        let n = BitU8::<4>::new(10).unwrap();
+
+        assert_eq!(n.checked_ilog10(), Some(1));
+        assert!(BitU8::<4>::MIN.checked_ilog10().is_none());
+    }
+
+    #[test]
+    const fn checked_ilog10_is_const_fn() {
+        const _: Option<u32> = BitU8::<4>::MIN.checked_ilog10();
     }
 
     #[test]
