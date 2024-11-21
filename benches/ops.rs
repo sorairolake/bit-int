@@ -66,6 +66,20 @@ fn checked_div_bit_uint(b: &mut Bencher) {
 }
 
 #[bench]
+fn checked_div_euclid_bit_int(b: &mut Bencher) {
+    let n = BitI32::<31>::new(42).unwrap();
+
+    b.iter(|| n.checked_div_euclid(2));
+}
+
+#[bench]
+fn checked_div_euclid_bit_uint(b: &mut Bencher) {
+    let n = BitU32::<31>::new(42).unwrap();
+
+    b.iter(|| n.checked_div_euclid(2));
+}
+
+#[bench]
 fn checked_rem_bit_int(b: &mut Bencher) {
     let n = BitI32::<31>::new(5).unwrap();
 
@@ -77,6 +91,20 @@ fn checked_rem_bit_uint(b: &mut Bencher) {
     let n = BitU32::<31>::new(5).unwrap();
 
     b.iter(|| n.checked_rem(2));
+}
+
+#[bench]
+fn checked_rem_euclid_bit_int(b: &mut Bencher) {
+    let n = BitI32::<31>::new(5).unwrap();
+
+    b.iter(|| n.checked_rem_euclid(2));
+}
+
+#[bench]
+fn checked_rem_euclid_bit_uint(b: &mut Bencher) {
+    let n = BitU32::<31>::new(5).unwrap();
+
+    b.iter(|| n.checked_rem_euclid(2));
 }
 
 #[bench]
@@ -133,6 +161,34 @@ fn checked_neg_bit_uint(b: &mut Bencher) {
     let n = BitU32::<31>::MIN;
 
     b.iter(|| n.checked_neg());
+}
+
+#[bench]
+fn checked_shl_bit_int(b: &mut Bencher) {
+    let n = BitI32::<31>::new(0x01).unwrap();
+
+    b.iter(|| n.checked_shl(4));
+}
+
+#[bench]
+fn checked_shl_bit_uint(b: &mut Bencher) {
+    let n = BitU32::<31>::new(0x01).unwrap();
+
+    b.iter(|| n.checked_shl(4));
+}
+
+#[bench]
+fn checked_shr_bit_int(b: &mut Bencher) {
+    let n = BitI32::<31>::new(0x10).unwrap();
+
+    b.iter(|| n.checked_shr(4));
+}
+
+#[bench]
+fn checked_shr_bit_uint(b: &mut Bencher) {
+    let n = BitU32::<31>::new(0x10).unwrap();
+
+    b.iter(|| n.checked_shr(4));
 }
 
 #[bench]

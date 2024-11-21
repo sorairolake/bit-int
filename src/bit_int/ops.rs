@@ -106,6 +106,31 @@ macro_rules! impl_ops {
                 }
             }
 
+            /// Calculates the quotient of Euclidean division of `self` by `rhs`.
+            ///
+            /// Returns [`None`] if `rhs` is `0` or the division results in overflow.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitInt;
+            /// #
+            #[doc = concat!("let n = BitInt::<", stringify!($T), ", 7>::new(42).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_div_euclid(2).map(BitInt::get), Some(21));
+            /// assert!(n.checked_div_euclid(0).is_none());
+            #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 7>::MIN.checked_div_euclid(-1).is_none());")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_div_euclid(self, rhs: $T) -> Option<Self> {
+                if let Some(result) = self.get().checked_div_euclid(rhs) {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
+
             /// Calculates the remainder when `self` is divided by `rhs`.
             ///
             /// Returns [`None`] if `rhs` is `0` or the division results in overflow.
@@ -126,6 +151,30 @@ macro_rules! impl_ops {
             pub const fn checked_rem(self, rhs: $T) -> Option<Self> {
                 match self.get().checked_rem(rhs) {
                     Some(result) if self.checked_div(rhs).is_some() => Self::new(result),
+                    _ => None,
+                }
+            }
+
+            /// Calculates the multiplication of `self` and `rhs`.
+            ///
+            /// Returns [`None`] if `rhs` is `0` or the division results in overflow.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitInt;
+            /// #
+            #[doc = concat!("let n = BitInt::<", stringify!($T), ", 4>::new(5).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_rem_euclid(2).map(BitInt::get), Some(1));
+            /// assert!(n.checked_rem_euclid(0).is_none());
+            #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 4>::MIN.checked_rem_euclid(-1).is_none());")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_rem_euclid(self, rhs: $T) -> Option<Self> {
+                match self.get().checked_rem_euclid(rhs) {
+                    Some(result) if self.checked_div_euclid(rhs).is_some() => Self::new(result),
                     _ => None,
                 }
             }
@@ -207,6 +256,58 @@ macro_rules! impl_ops {
             #[inline]
             pub const fn checked_neg(self) -> Option<Self> {
                 if let Some(result) = self.get().checked_neg() {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
+
+            /// Shifts `self` left by `rhs` bits.
+            ///
+            /// Returns [`None`] if `rhs` is larger than or equal to the number of bits
+            /// in `self`.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitInt;
+            /// #
+            #[doc = concat!("let n = BitInt::<", stringify!($T), ", 6>::new(0x01).unwrap();")]
+            #[doc = concat!("let m = BitInt::<", stringify!($T), ", 6>::new(0x10).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_shl(4).map(BitInt::get), Some(0x10));
+            /// assert!(n.checked_shl(129).is_none());
+            #[doc = concat!("assert_eq!(m.checked_shl(", stringify!($T), "::BITS - 1).map(BitInt::get), Some(0x00));")]
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_shl(self, rhs: u32) -> Option<Self> {
+                if let Some(result) = self.get().checked_shl(rhs) {
+                    Self::new(result)
+                } else {
+                    None
+                }
+            }
+
+            /// Shifts `self` right by `rhs` bits.
+            ///
+            /// Returns [`None`] if `rhs` is larger than or equal to the number of bits
+            /// in `self`.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// # use bit_int::BitInt;
+            /// #
+            #[doc = concat!("let n = BitInt::<", stringify!($T), ", 6>::new(0x10).unwrap();")]
+            ///
+            /// assert_eq!(n.checked_shr(4).map(BitInt::get), Some(0x01));
+            /// assert!(n.checked_shr(128).is_none());
+            /// ```
+            #[must_use]
+            #[inline]
+            pub const fn checked_shr(self, rhs: u32) -> Option<Self> {
+                if let Some(result) = self.get().checked_shr(rhs) {
                     Self::new(result)
                 } else {
                     None
@@ -328,6 +429,20 @@ mod tests {
     }
 
     #[test]
+    fn checked_div_euclid() {
+        let n = BitI8::<7>::new(42).unwrap();
+
+        assert_eq!(n.checked_div_euclid(2).map(BitI8::get), Some(21));
+        assert!(n.checked_div_euclid(0).is_none());
+        assert!(BitI8::<7>::MIN.checked_div_euclid(-1).is_none());
+    }
+
+    #[test]
+    const fn checked_div_euclid_is_const_fn() {
+        const _: Option<BitI8<7>> = BitI8::<7>::MAX.checked_div_euclid(0);
+    }
+
+    #[test]
     fn checked_rem() {
         let n = BitI8::<4>::new(5).unwrap();
 
@@ -339,6 +454,20 @@ mod tests {
     #[test]
     const fn checked_rem_is_const_fn() {
         const _: Option<BitI8<4>> = BitI8::<4>::MAX.checked_rem(0);
+    }
+
+    #[test]
+    fn checked_rem_euclid() {
+        let n = BitI8::<4>::new(5).unwrap();
+
+        assert_eq!(n.checked_rem_euclid(2).map(BitI8::get), Some(1));
+        assert!(n.checked_rem_euclid(0).is_none());
+        assert!(BitI8::<4>::MIN.checked_rem_euclid(-1).is_none());
+    }
+
+    #[test]
+    const fn checked_rem_euclid_is_const_fn() {
+        const _: Option<BitI8<4>> = BitI8::<4>::MAX.checked_rem_euclid(0);
     }
 
     #[test]
@@ -392,6 +521,34 @@ mod tests {
     #[test]
     const fn checked_neg_is_const_fn() {
         const _: Option<BitI8<4>> = BitI8::<4>::MIN.checked_neg();
+    }
+
+    #[test]
+    fn checked_shl() {
+        let n = BitI8::<6>::new(0x01).unwrap();
+        let m = BitI8::<6>::new(0x10).unwrap();
+
+        assert_eq!(n.checked_shl(4).map(BitI8::get), Some(0x10));
+        assert!(n.checked_shl(129).is_none());
+        assert_eq!(m.checked_shl(i8::BITS - 1).map(BitI8::get), Some(0x00));
+    }
+
+    #[test]
+    const fn checked_shl_is_const_fn() {
+        const _: Option<BitI8<6>> = BitI8::<6>::MIN.checked_shl(129);
+    }
+
+    #[test]
+    fn checked_shr() {
+        let n = BitI8::<6>::new(0x10).unwrap();
+
+        assert_eq!(n.checked_shr(4).map(BitI8::get), Some(0x01));
+        assert!(n.checked_shr(128).is_none());
+    }
+
+    #[test]
+    const fn checked_shr_is_const_fn() {
+        const _: Option<BitI8<6>> = BitI8::<6>::MIN.checked_shr(128);
     }
 
     #[test]

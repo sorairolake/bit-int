@@ -24,6 +24,14 @@ project adheres to https://semver.org/[Semantic Versioning].
   ({pull-request-url}/12[#12])
 * Add `BitInt::checked_ilog10` and `BitUint::checked_ilog10`
   ({pull-request-url}/12[#12])
+* Add `BitInt::checked_div_euclid` and `BitUint::checked_div_euclid`
+  ({pull-request-url}/14[#14])
+* Add `BitInt::checked_rem_euclid` and `BitUint::checked_rem_euclid`
+  ({pull-request-url}/14[#14])
+* Add `BitInt::checked_shl` and `BitUint::checked_shl`
+  ({pull-request-url}/14[#14])
+* Add `BitInt::checked_shr` and `BitUint::checked_shr`
+  ({pull-request-url}/14[#14])
 
 === Changed
 
