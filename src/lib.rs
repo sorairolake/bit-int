@@ -66,7 +66,7 @@
 //! [C23]: https://en.cppreference.com/w/c/23
 //! [Zig]: https://ziglang.org/
 
-#![doc(html_root_url = "https://docs.rs/bit-int/0.1.1/")]
+#![doc(html_root_url = "https://docs.rs/bit-int/0.1.2/")]
 #![no_std]
 // Lint levels of rustc.
 #![deny(missing_docs)]
