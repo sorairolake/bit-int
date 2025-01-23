@@ -27,7 +27,7 @@ use num_traits::{PrimInt, Signed};
 /// let n = Int::new(-64).unwrap();
 /// assert_eq!(n, Int::MIN);
 ///
-/// assert!(n.checked_sub(1).is_none());
+/// assert_eq!(n.checked_sub(1), None);
 /// assert_eq!(n.get().checked_sub(1), Some(-65));
 /// ```
 ///
@@ -66,7 +66,7 @@ macro_rules! impl_bit_int {
             /// assert_eq!(n.map(BitInt::get), Some(42));
             #[doc = ""]
             #[doc = concat!("let m = BitInt::<", stringify!($T), ", 6>::new(42);")]
-            /// assert!(m.is_none());
+            /// assert_eq!(m, None);
             /// ```
             #[must_use]
             #[inline]
@@ -88,8 +88,8 @@ macro_rules! impl_bit_int {
             /// ```
             /// # use bit_int::BitInt;
             /// #
-            #[doc = concat!("assert!(!BitInt::<", stringify!($T), ", 7>::MIN.is_positive());")]
-            #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 7>::MAX.is_positive());")]
+            #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.is_positive(), false);")]
+            #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.is_positive(), true);")]
             /// ```
             #[must_use]
             #[inline]
@@ -105,8 +105,8 @@ macro_rules! impl_bit_int {
             /// ```
             /// # use bit_int::BitInt;
             /// #
-            #[doc = concat!("assert!(BitInt::<", stringify!($T), ", 7>::MIN.is_negative());")]
-            #[doc = concat!("assert!(!BitInt::<", stringify!($T), ", 7>::MAX.is_negative());")]
+            #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.is_negative(), true);")]
+            #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.is_negative(), false);")]
             /// ```
             #[must_use]
             #[inline]

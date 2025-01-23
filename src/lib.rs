@@ -39,7 +39,7 @@
 //! assert_eq!(n.get(), 63);
 //! assert_eq!(n, Int::MAX);
 //!
-//! assert!(n.checked_add(22).is_none());
+//! assert_eq!(n.checked_add(22), None);
 //! ```
 //!
 //! ## Unsigned integer type
@@ -60,7 +60,7 @@
 //! assert_eq!(n.get(), 127);
 //! assert_eq!(n, Uint::MAX);
 //!
-//! assert!(n.checked_add(86).is_none());
+//! assert_eq!(n.checked_add(86), None);
 //! ```
 //!
 //! [C23]: https://en.cppreference.com/w/c/23

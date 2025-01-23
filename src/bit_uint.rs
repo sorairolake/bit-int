@@ -27,7 +27,7 @@ use num_traits::{PrimInt, Unsigned};
 /// let n = Uint::new(127).unwrap();
 /// assert_eq!(n, Uint::MAX);
 ///
-/// assert!(n.checked_add(1).is_none());
+/// assert_eq!(n.checked_add(1), None);
 /// assert_eq!(n.get().checked_add(1), Some(128));
 /// ```
 ///
@@ -66,7 +66,7 @@ macro_rules! impl_bit_uint {
             /// assert_eq!(n.map(BitUint::get), Some(42));
             #[doc = ""]
             #[doc = concat!("let m = BitUint::<", stringify!($T), ", 5>::new(42);")]
-            /// assert!(m.is_none());
+            /// assert_eq!(m, None);
             /// ```
             #[must_use]
             #[inline]
