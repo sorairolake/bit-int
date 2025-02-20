@@ -17,11 +17,10 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 
 ## Usage
 
-Add this to your `Cargo.toml`:
+Run the following command in your project directory:
 
-```toml
-[dependencies]
-bit-int = "0.1.2"
+```sh
+cargo add bit-int
 ```
 
 ### Documentation
