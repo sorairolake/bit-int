@@ -79,6 +79,6 @@ mod bit_int;
 mod bit_uint;
 
 pub use crate::{
-    bit_int::{BitI128, BitI16, BitI32, BitI64, BitI8, BitInt, BitIsize},
-    bit_uint::{BitU128, BitU16, BitU32, BitU64, BitU8, BitUint, BitUsize},
+    bit_int::{BitI8, BitI16, BitI32, BitI64, BitI128, BitInt, BitIsize},
+    bit_uint::{BitU8, BitU16, BitU32, BitU64, BitU128, BitUint, BitUsize},
 };
