@@ -240,7 +240,11 @@ macro_rules! impl_ops {
             ///
             /// Returns [`None`] unless `self` is `0`.
             ///
+            /// <div class="warning">
+            ///
             /// Note that negating any positive integer will overflow.
+            ///
+            /// </div>
             ///
             /// # Examples
             ///
