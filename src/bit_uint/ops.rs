@@ -21,7 +21,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(42).unwrap();")]
             ///
             /// assert_eq!(n.checked_add(21).map(BitUint::get), Some(63));
-            /// assert!(n.checked_add(22).is_none());
+            /// assert_eq!(n.checked_add(22), None);
             /// ```
             #[must_use]
             #[inline]
@@ -45,7 +45,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(42).unwrap();")]
             ///
             /// assert_eq!(n.checked_sub(42).map(BitUint::get), Some(0));
-            /// assert!(n.checked_sub(43).is_none());
+            /// assert_eq!(n.checked_sub(43), None);
             /// ```
             #[must_use]
             #[inline]
@@ -69,7 +69,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(21).unwrap();")]
             ///
             /// assert_eq!(n.checked_mul(2).map(BitUint::get), Some(42));
-            /// assert!(n.checked_mul(4).is_none());
+            /// assert_eq!(n.checked_mul(4), None);
             /// ```
             #[must_use]
             #[inline]
@@ -93,7 +93,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(42).unwrap();")]
             ///
             /// assert_eq!(n.checked_div(2).map(BitUint::get), Some(21));
-            /// assert!(n.checked_div(0).is_none());
+            /// assert_eq!(n.checked_div(0), None);
             /// ```
             #[must_use]
             #[inline]
@@ -117,7 +117,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(42).unwrap();")]
             ///
             /// assert_eq!(n.checked_div_euclid(2).map(BitUint::get), Some(21));
-            /// assert!(n.checked_div_euclid(0).is_none());
+            /// assert_eq!(n.checked_div_euclid(0), None);
             /// ```
             #[must_use]
             #[inline]
@@ -141,7 +141,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 3>::new(5).unwrap();")]
             ///
             /// assert_eq!(n.checked_rem(2).map(BitUint::get), Some(1));
-            /// assert!(n.checked_rem(0).is_none());
+            /// assert_eq!(n.checked_rem(0), None);
             /// ```
             #[must_use]
             #[inline]
@@ -165,7 +165,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 3>::new(5).unwrap();")]
             ///
             /// assert_eq!(n.checked_rem_euclid(2).map(BitUint::get), Some(1));
-            /// assert!(n.checked_rem_euclid(0).is_none());
+            /// assert_eq!(n.checked_rem_euclid(0), None);
             /// ```
             #[must_use]
             #[inline]
@@ -240,7 +240,11 @@ macro_rules! impl_ops {
             ///
             /// Returns [`None`] unless `self` is `0`.
             ///
+            /// <div class="warning">
+            ///
             /// Note that negating any positive integer will overflow.
+            ///
+            /// </div>
             ///
             /// # Examples
             ///
@@ -251,7 +255,7 @@ macro_rules! impl_ops {
             #[doc = concat!("    BitUint::<", stringify!($T), ", 1>::MIN.checked_neg().map(BitUint::get),")]
             ///     Some(0)
             /// );
-            #[doc = concat!("assert!(BitUint::<", stringify!($T), ", 1>::MAX.checked_neg().is_none());")]
+            #[doc = concat!("assert_eq!(BitUint::<", stringify!($T), ", 1>::MAX.checked_neg(), None);")]
             /// ```
             #[must_use]
             #[inline]
@@ -277,7 +281,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let m = BitUint::<", stringify!($T), ", 5>::new(0x10).unwrap();")]
             ///
             /// assert_eq!(n.checked_shl(4).map(BitUint::get), Some(0x10));
-            /// assert!(m.checked_shl(129).is_none());
+            /// assert_eq!(m.checked_shl(129), None);
             #[doc = concat!("assert_eq!(m.checked_shl(", stringify!($T), "::BITS - 1).map(BitUint::get), Some(0x00));")]
             /// ```
             #[must_use]
@@ -303,7 +307,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 5>::new(0x10).unwrap();")]
             ///
             /// assert_eq!(n.checked_shr(4).map(BitUint::get), Some(0x01));
-            /// assert!(n.checked_shr(129).is_none());
+            /// assert_eq!(n.checked_shr(129), None);
             /// ```
             #[must_use]
             #[inline]
@@ -327,7 +331,7 @@ macro_rules! impl_ops {
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(2).unwrap();")]
             ///
             /// assert_eq!(n.checked_pow(5).map(BitUint::get), Some(32));
-            #[doc = concat!("assert!(BitUint::<", stringify!($T), ", 6>::MAX.checked_pow(2).is_none());")]
+            #[doc = concat!("assert_eq!(BitUint::<", stringify!($T), ", 6>::MAX.checked_pow(2), None);")]
             /// ```
             #[must_use]
             #[inline]

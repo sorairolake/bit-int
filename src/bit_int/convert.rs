@@ -25,7 +25,7 @@ impl_from_bit_int_to_underlying_type!(isize);
 
 #[cfg(test)]
 mod tests {
-    use super::super::{BitI128, BitI16, BitI32, BitI64, BitI8, BitIsize};
+    use super::super::{BitI8, BitI16, BitI32, BitI64, BitI128, BitIsize};
 
     #[test]
     fn from_bit_int_to_underlying_type() {

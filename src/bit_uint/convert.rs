@@ -25,7 +25,7 @@ impl_from_bit_uint_to_underlying_type!(usize);
 
 #[cfg(test)]
 mod tests {
-    use super::super::{BitU128, BitU16, BitU32, BitU64, BitU8, BitUsize};
+    use super::super::{BitU8, BitU16, BitU32, BitU64, BitU128, BitUsize};
 
     #[test]
     fn from_bit_uint_to_underlying_type() {

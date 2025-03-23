@@ -39,7 +39,7 @@
 //! assert_eq!(n.get(), 63);
 //! assert_eq!(n, Int::MAX);
 //!
-//! assert!(n.checked_add(22).is_none());
+//! assert_eq!(n.checked_add(22), None);
 //! ```
 //!
 //! ## Unsigned integer type
@@ -60,13 +60,13 @@
 //! assert_eq!(n.get(), 127);
 //! assert_eq!(n, Uint::MAX);
 //!
-//! assert!(n.checked_add(86).is_none());
+//! assert_eq!(n.checked_add(86), None);
 //! ```
 //!
 //! [C23]: https://en.cppreference.com/w/c/23
 //! [Zig]: https://ziglang.org/
 
-#![doc(html_root_url = "https://docs.rs/bit-int/0.1.2/")]
+#![doc(html_root_url = "https://docs.rs/bit-int/0.2.0/")]
 #![no_std]
 // Lint levels of rustc.
 #![deny(missing_docs)]
@@ -79,6 +79,6 @@ mod bit_int;
 mod bit_uint;
 
 pub use crate::{
-    bit_int::{BitI128, BitI16, BitI32, BitI64, BitI8, BitInt, BitIsize},
-    bit_uint::{BitU128, BitU16, BitU32, BitU64, BitU8, BitUint, BitUsize},
+    bit_int::{BitI8, BitI16, BitI32, BitI64, BitI128, BitInt, BitIsize},
+    bit_uint::{BitU8, BitU16, BitU32, BitU64, BitU128, BitUint, BitUsize},
 };
