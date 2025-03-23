@@ -4,7 +4,7 @@
 
 [package]
 name = "bit-int"
-version = "0.1.2"
+version = "0.2.0"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2024"
 rust-version = "1.85.0"
