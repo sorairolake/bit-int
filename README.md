@@ -1,7 +1,7 @@
 <!--
 SPDX-FileCopyrightText: 2024 Shun Sakai
 
-SPDX-License-Identifier: Apache-2.0 OR MIT
+SPDX-License-Identifier: CC-BY-4.0
 -->
 
 # bit-int
@@ -35,11 +35,6 @@ The minimum supported Rust version (MSRV) of this library is v1.85.0.
 
 The upstream repository is available at
 <https://github.com/sorairolake/bit-int.git>.
-
-The source code is also available at:
-
-- <https://gitlab.com/sorairolake/bit-int.git>
-- <https://codeberg.org/sorairolake/bit-int.git>
 
 ## Changelog
 
