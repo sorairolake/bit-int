@@ -188,9 +188,23 @@ mod tests {
     }
 
     #[test]
-    fn layout() {
+    fn size_of() {
+        assert_eq!(mem::size_of::<BitI8::<7>>(), mem::size_of::<i8>());
+        assert_eq!(mem::size_of::<BitI16::<15>>(), mem::size_of::<i16>());
         assert_eq!(mem::size_of::<BitI32::<31>>(), mem::size_of::<i32>());
+        assert_eq!(mem::size_of::<BitI64::<63>>(), mem::size_of::<i64>());
+        assert_eq!(mem::size_of::<BitI128::<127>>(), mem::size_of::<i128>());
+        assert_eq!(mem::size_of::<BitIsize::<31>>(), mem::size_of::<isize>());
+    }
+
+    #[test]
+    fn align_of() {
+        assert_eq!(mem::align_of::<BitI8::<7>>(), mem::align_of::<i8>());
+        assert_eq!(mem::align_of::<BitI16::<15>>(), mem::align_of::<i16>());
         assert_eq!(mem::align_of::<BitI32::<31>>(), mem::align_of::<i32>());
+        assert_eq!(mem::align_of::<BitI64::<63>>(), mem::align_of::<i64>());
+        assert_eq!(mem::align_of::<BitI128::<127>>(), mem::align_of::<i128>());
+        assert_eq!(mem::align_of::<BitIsize::<31>>(), mem::align_of::<isize>());
     }
 
     #[test]
