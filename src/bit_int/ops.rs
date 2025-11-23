@@ -149,9 +149,12 @@ macro_rules! impl_ops {
             #[must_use]
             #[inline]
             pub const fn checked_rem(self, rhs: $T) -> Option<Self> {
-                match self.get().checked_rem(rhs) {
-                    Some(result) if self.checked_div(rhs).is_some() => Self::new(result),
-                    _ => None,
+                if let Some(result) = self.get().checked_rem(rhs)
+                    && self.checked_div(rhs).is_some()
+                {
+                    Self::new(result)
+                } else {
+                    None
                 }
             }
 
@@ -173,9 +176,12 @@ macro_rules! impl_ops {
             #[must_use]
             #[inline]
             pub const fn checked_rem_euclid(self, rhs: $T) -> Option<Self> {
-                match self.get().checked_rem_euclid(rhs) {
-                    Some(result) if self.checked_div_euclid(rhs).is_some() => Self::new(result),
-                    _ => None,
+                if let Some(result) = self.get().checked_rem_euclid(rhs)
+                    && self.checked_div_euclid(rhs).is_some()
+                {
+                    Self::new(result)
+                } else {
+                    None
                 }
             }
 

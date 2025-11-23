@@ -6,7 +6,7 @@
 name = "bit-int"
 version = "0.2.1"
 edition = "2024"
-rust-version = "1.85.0"
+rust-version = "1.88.0"
 description = "An arbitrary fixed bit-width integer library"
 documentation = "https://docs.rs/bit-int"
 repository = "https://github.com/sorairolake/bit-int"
