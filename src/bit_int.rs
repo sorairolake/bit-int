@@ -69,7 +69,6 @@ macro_rules! impl_bit_int {
             /// assert_eq!(m, None);
             /// ```
             #[must_use]
-            #[inline]
             pub const fn new(n: $T) -> Option<Self> {
                 if n >= Self::MIN.get() && n <= Self::MAX.get() {
                     // SAFETY: `n` is checked to be a valid `N`-bit signed integer.
@@ -92,7 +91,6 @@ macro_rules! impl_bit_int {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.is_positive(), true);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn is_positive(self) -> bool {
                 self.get().is_positive()
             }
@@ -109,7 +107,6 @@ macro_rules! impl_bit_int {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.is_negative(), false);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn is_negative(self) -> bool {
                 self.get().is_negative()
             }
@@ -139,15 +136,11 @@ impl<T: Signed + PrimInt, const N: u32> BitInt<T, N> {
     /// # Safety
     ///
     /// The value must be a valid `N`-bit signed integer.
-    #[must_use]
-    #[inline]
     pub const unsafe fn new_unchecked(n: T) -> Self {
         Self(n)
     }
 
     /// Returns the contained value as the underlying type.
-    #[must_use]
-    #[inline]
     pub const fn get(self) -> T {
         self.0
     }

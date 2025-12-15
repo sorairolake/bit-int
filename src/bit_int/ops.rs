@@ -24,7 +24,6 @@ macro_rules! impl_ops {
             /// assert_eq!(n.checked_add(22), None);
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_add(self, rhs: $T) -> Option<Self> {
                 if let Some(result) = self.get().checked_add(rhs) {
                     Self::new(result)
@@ -48,7 +47,6 @@ macro_rules! impl_ops {
             /// assert_eq!(n.checked_sub(23), None);
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_sub(self, rhs: $T) -> Option<Self> {
                 if let Some(result) = self.get().checked_sub(rhs) {
                     Self::new(result)
@@ -72,7 +70,6 @@ macro_rules! impl_ops {
             /// assert_eq!(n.checked_mul(4), None);
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_mul(self, rhs: $T) -> Option<Self> {
                 if let Some(result) = self.get().checked_mul(rhs) {
                     Self::new(result)
@@ -97,7 +94,6 @@ macro_rules! impl_ops {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.checked_div(-1), None);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_div(self, rhs: $T) -> Option<Self> {
                 if let Some(result) = self.get().checked_div(rhs) {
                     Self::new(result)
@@ -122,7 +118,6 @@ macro_rules! impl_ops {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.checked_div_euclid(-1), None);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_div_euclid(self, rhs: $T) -> Option<Self> {
                 if let Some(result) = self.get().checked_div_euclid(rhs) {
                     Self::new(result)
@@ -147,7 +142,6 @@ macro_rules! impl_ops {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 4>::MIN.checked_rem(-1), None);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_rem(self, rhs: $T) -> Option<Self> {
                 if let Some(result) = self.get().checked_rem(rhs)
                     && self.checked_div(rhs).is_some()
@@ -174,7 +168,6 @@ macro_rules! impl_ops {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 4>::MIN.checked_rem_euclid(-1), None);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_rem_euclid(self, rhs: $T) -> Option<Self> {
                 if let Some(result) = self.get().checked_rem_euclid(rhs)
                     && self.checked_div_euclid(rhs).is_some()
@@ -201,7 +194,6 @@ macro_rules! impl_ops {
             /// assert_eq!(n.checked_ilog(5), Some(1));
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_ilog(self, base: $T) -> Option<u32> {
                 self.get().checked_ilog(base)
             }
@@ -220,7 +212,6 @@ macro_rules! impl_ops {
             /// assert_eq!(n.checked_ilog2(), Some(1));
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_ilog2(self) -> Option<u32> {
                 self.get().checked_ilog2()
             }
@@ -239,7 +230,6 @@ macro_rules! impl_ops {
             /// assert_eq!(n.checked_ilog10(), Some(1));
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_ilog10(self) -> Option<u32> {
                 self.get().checked_ilog10()
             }
@@ -259,7 +249,6 @@ macro_rules! impl_ops {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 4>::MIN.checked_neg(), None);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_neg(self) -> Option<Self> {
                 if let Some(result) = self.get().checked_neg() {
                     Self::new(result)
@@ -286,7 +275,6 @@ macro_rules! impl_ops {
             #[doc = concat!("assert_eq!(m.checked_shl(", stringify!($T), "::BITS - 1).map(BitInt::get), Some(0x00));")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_shl(self, rhs: u32) -> Option<Self> {
                 if let Some(result) = self.get().checked_shl(rhs) {
                     Self::new(result)
@@ -311,7 +299,6 @@ macro_rules! impl_ops {
             /// assert_eq!(n.checked_shr(128), None);
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_shr(self, rhs: u32) -> Option<Self> {
                 if let Some(result) = self.get().checked_shr(rhs) {
                     Self::new(result)
@@ -335,7 +322,6 @@ macro_rules! impl_ops {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 4>::MIN.checked_abs(), None);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_abs(self) -> Option<Self> {
                 if let Some(result) = self.get().checked_abs() {
                     Self::new(result)
@@ -359,7 +345,6 @@ macro_rules! impl_ops {
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 8>::MAX.checked_pow(2), None);")]
             /// ```
             #[must_use]
-            #[inline]
             pub const fn checked_pow(self, exp: u32) -> Option<Self> {
                 if let Some(result) = self.get().checked_pow(exp) {
                     Self::new(result)

@@ -13,7 +13,6 @@ use super::BitUint;
 macro_rules! impl_fmt {
     ($trait:ident) => {
         impl<T: Unsigned + PrimInt + fmt::$trait, const N: u32> fmt::$trait for BitUint<T, N> {
-            #[inline]
             fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 self.get().fmt(f)
             }

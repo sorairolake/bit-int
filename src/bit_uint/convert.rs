@@ -9,7 +9,6 @@ use super::BitUint;
 macro_rules! impl_from_bit_uint_to_underlying_type {
     ($T:ty) => {
         impl<const N: u32> From<BitUint<$T, N>> for $T {
-            #[inline]
             fn from(n: BitUint<$T, N>) -> Self {
                 n.get()
             }

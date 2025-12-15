@@ -69,7 +69,6 @@ macro_rules! impl_bit_uint {
             /// assert_eq!(m, None);
             /// ```
             #[must_use]
-            #[inline]
             pub const fn new(n: $T) -> Option<Self> {
                 // `n` must be greater than or equal to 0.
                 debug_assert!(n >= Self::MIN.get());
@@ -108,15 +107,11 @@ impl<T: Unsigned + PrimInt, const N: u32> BitUint<T, N> {
     /// # Safety
     ///
     /// The value must be a valid `N`-bit unsigned integer.
-    #[must_use]
-    #[inline]
     pub const unsafe fn new_unchecked(n: T) -> Self {
         Self(n)
     }
 
     /// Returns the contained value as the underlying type.
-    #[must_use]
-    #[inline]
     pub const fn get(self) -> T {
         self.0
     }
