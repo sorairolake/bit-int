@@ -75,8 +75,7 @@ macro_rules! impl_bit_uint {
 
                 if n <= Self::MAX.get() {
                     // SAFETY: `n` is checked to be a valid `N`-bit unsigned integer.
-                    let n = unsafe { Self::new_unchecked(n) };
-                    Some(n)
+                    Some(unsafe { Self::new_unchecked(n) })
                 } else {
                     None
                 }

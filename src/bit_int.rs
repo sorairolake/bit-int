@@ -72,8 +72,7 @@ macro_rules! impl_bit_int {
             pub const fn new(n: $T) -> Option<Self> {
                 if n >= Self::MIN.get() && n <= Self::MAX.get() {
                     // SAFETY: `n` is checked to be a valid `N`-bit signed integer.
-                    let n = unsafe { Self::new_unchecked(n) };
-                    Some(n)
+                    Some(unsafe { Self::new_unchecked(n) })
                 } else {
                     None
                 }
