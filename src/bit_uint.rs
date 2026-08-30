@@ -20,8 +20,8 @@ use num_traits::{PrimInt, Unsigned};
 /// # Examples
 ///
 /// ```
-/// # use bit_int::BitUint;
-/// #
+/// use bit_int::BitUint;
+///
 /// type Uint = BitUint<u8, 7>;
 ///
 /// let n = Uint::new(127).unwrap();
@@ -34,16 +34,16 @@ use num_traits::{PrimInt, Unsigned};
 /// In this case, `N` must be less than or equal to [`u32::BITS`]:
 ///
 /// ```compile_fail
-/// # use bit_int::BitUint;
-/// #
+/// use bit_int::BitUint;
+///
 /// let _ = BitUint::<u32, 33>::new(42);
 /// ```
 ///
 /// `N` must be greater than `0`:
 ///
 /// ```compile_fail
-/// # use bit_int::BitUint;
-/// #
+/// use bit_int::BitUint;
+///
 /// let _ = BitUint::<u64, 0>::new(0);
 /// ```
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -60,8 +60,8 @@ macro_rules! impl_bit_uint {
             /// # Examples
             ///
             /// ```
-            /// # use bit_int::BitUint;
-            /// #
+            /// use bit_int::BitUint;
+            #[doc = ""]
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(42);")]
             /// assert_eq!(n.map(BitUint::get), Some(42));
             #[doc = ""]

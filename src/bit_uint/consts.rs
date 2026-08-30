@@ -16,8 +16,8 @@ macro_rules! impl_consts {
             /// # Examples
             ///
             /// ```
-            /// # use bit_int::BitUint;
-            /// #
+            /// use bit_int::BitUint;
+            #[doc = ""]
             #[doc = concat!("assert_eq!(BitUint::<", stringify!($T), ", 7>::MIN.get(), 0);")]
             /// ```
             // SAFETY: because `MIN` must be the smallest value of a `N`-bit unsigned
@@ -29,8 +29,8 @@ macro_rules! impl_consts {
             /// # Examples
             ///
             /// ```
-            /// # use bit_int::BitUint;
-            /// #
+            /// use bit_int::BitUint;
+            #[doc = ""]
             #[doc = concat!("assert_eq!(BitUint::<", stringify!($T), ", 7>::MAX.get(), 127);")]
             /// ```
             // SAFETY: because `MAX` must be the largest value of a `N`-bit unsigned
@@ -43,8 +43,8 @@ macro_rules! impl_consts {
             /// # Examples
             ///
             /// ```
-            /// # use bit_int::BitUint;
-            /// #
+            /// use bit_int::BitUint;
+            #[doc = ""]
             #[doc = concat!("assert_eq!(BitUint::<", stringify!($T), ", 7>::BITS, 7);")]
             /// ```
             pub const BITS: u32 = N;

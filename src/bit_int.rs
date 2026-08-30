@@ -20,8 +20,8 @@ use num_traits::{PrimInt, Signed};
 /// # Examples
 ///
 /// ```
-/// # use bit_int::BitInt;
-/// #
+/// use bit_int::BitInt;
+///
 /// type Int = BitInt<i8, 7>;
 ///
 /// let n = Int::new(-64).unwrap();
@@ -34,16 +34,16 @@ use num_traits::{PrimInt, Signed};
 /// In this case, `N` must be less than or equal to [`i32::BITS`]:
 ///
 /// ```compile_fail
-/// # use bit_int::BitInt;
-/// #
+/// use bit_int::BitInt;
+///
 /// let _ = BitInt::<i32, 33>::new(42);
 /// ```
 ///
 /// `N` must be greater than `0`:
 ///
 /// ```compile_fail
-/// # use bit_int::BitInt;
-/// #
+/// use bit_int::BitInt;
+///
 /// let _ = BitInt::<i64, 0>::new(0);
 /// ```
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -60,8 +60,8 @@ macro_rules! impl_bit_int {
             /// # Examples
             ///
             /// ```
-            /// # use bit_int::BitInt;
-            /// #
+            /// use bit_int::BitInt;
+            ///
             #[doc = concat!("let n = BitInt::<", stringify!($T), ", 7>::new(42);")]
             /// assert_eq!(n.map(BitInt::get), Some(42));
             #[doc = ""]
@@ -84,8 +84,8 @@ macro_rules! impl_bit_int {
             /// # Examples
             ///
             /// ```
-            /// # use bit_int::BitInt;
-            /// #
+            /// use bit_int::BitInt;
+            ///
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.is_positive(), false);")]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.is_positive(), true);")]
             /// ```
@@ -100,8 +100,8 @@ macro_rules! impl_bit_int {
             /// # Examples
             ///
             /// ```
-            /// # use bit_int::BitInt;
-            /// #
+            /// use bit_int::BitInt;
+            ///
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.is_negative(), true);")]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.is_negative(), false);")]
             /// ```
