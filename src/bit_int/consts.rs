@@ -15,7 +15,7 @@ macro_rules! impl_consts {
             ///
             /// ```
             /// use bit_int::BitInt;
-            ///
+            #[doc = ""]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.get(), -64);")]
             /// ```
             // SAFETY: because `MIN` must be the smallest value of a `N`-bit signed integer.
@@ -28,7 +28,7 @@ macro_rules! impl_consts {
             ///
             /// ```
             /// use bit_int::BitInt;
-            ///
+            #[doc = ""]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.get(), 63);")]
             /// ```
             // SAFETY: because `MAX` must be the largest value of a `N`-bit signed integer.
@@ -41,7 +41,7 @@ macro_rules! impl_consts {
             ///
             /// ```
             /// use bit_int::BitInt;
-            ///
+            #[doc = ""]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::BITS, 7);")]
             /// ```
             pub const BITS: u32 = N;
