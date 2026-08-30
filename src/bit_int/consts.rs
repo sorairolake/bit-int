@@ -18,7 +18,8 @@ macro_rules! impl_consts {
             #[doc = ""]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.get(), -64);")]
             /// ```
-            // SAFETY: because `MIN` must be the smallest value of a `N`-bit signed integer.
+            // SAFETY: because `MIN` must be the smallest value of a `N`-bit signed
+            // integer.
             pub const MIN: Self =
                 unsafe { Self::new_unchecked(<$T>::MIN >> (<$T>::BITS - Self::BITS)) };
 
@@ -31,7 +32,8 @@ macro_rules! impl_consts {
             #[doc = ""]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.get(), 63);")]
             /// ```
-            // SAFETY: because `MAX` must be the largest value of a `N`-bit signed integer.
+            // SAFETY: because `MAX` must be the largest value of a `N`-bit signed
+            // integer.
             pub const MAX: Self =
                 unsafe { Self::new_unchecked(<$T>::MAX >> (<$T>::BITS - Self::BITS)) };
 
