@@ -61,7 +61,7 @@ macro_rules! impl_bit_int {
             ///
             /// ```
             /// use bit_int::BitInt;
-            #[doc = ""]
+            ///
             #[doc = concat!("let n = BitInt::<", stringify!($T), ", 7>::new(42);")]
             /// assert_eq!(n.map(BitInt::get), Some(42));
             #[doc = ""]
@@ -85,7 +85,7 @@ macro_rules! impl_bit_int {
             ///
             /// ```
             /// use bit_int::BitInt;
-            #[doc = ""]
+            ///
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.is_positive(), false);")]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.is_positive(), true);")]
             /// ```
@@ -101,7 +101,7 @@ macro_rules! impl_bit_int {
             ///
             /// ```
             /// use bit_int::BitInt;
-            #[doc = ""]
+            ///
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MIN.is_negative(), true);")]
             #[doc = concat!("assert_eq!(BitInt::<", stringify!($T), ", 7>::MAX.is_negative(), false);")]
             /// ```
