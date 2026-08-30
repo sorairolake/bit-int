@@ -61,7 +61,7 @@ macro_rules! impl_bit_uint {
             ///
             /// ```
             /// use bit_int::BitUint;
-            ///
+            #[doc = ""]
             #[doc = concat!("let n = BitUint::<", stringify!($T), ", 6>::new(42);")]
             /// assert_eq!(n.map(BitUint::get), Some(42));
             #[doc = ""]
