@@ -53,7 +53,9 @@ pub struct BitInt<T: Signed + PrimInt, const N: u32>(T);
 macro_rules! impl_bit_int {
     ($T:ty, $alias:ident) => {
         impl<const N: u32> BitInt<$T, N> {
-            /// Creates a new `BitInt` with the given signed integer value, or [`None`] if the value is not a valid `N`-bit signed integer.
+            /// Creates a new `BitInt` with the given signed integer value.
+            ///
+            /// Returns [`None`] if the value is not a valid `N`-bit signed integer.
             ///
             /// # Examples
             ///
