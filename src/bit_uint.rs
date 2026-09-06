@@ -53,9 +53,7 @@ pub struct BitUint<T: Unsigned + PrimInt, const N: u32>(T);
 macro_rules! impl_bit_uint {
     ($T:ty, $alias:ident) => {
         impl<const N: u32> BitUint<$T, N> {
-            /// Creates a new `BitUint` with the given unsigned integer value.
-            ///
-            /// Returns [`None`] if the value is not a valid `N`-bit unsigned integer.
+            /// Creates a new `BitUint` with the given unsigned integer value, or [`None`] if the value is not a valid `N`-bit unsigned integer.
             ///
             /// # Examples
             ///
