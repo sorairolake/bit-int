@@ -179,7 +179,8 @@ macro_rules! impl_ops {
             }
 
             /// Returns the logarithm of the number with respect to an arbitrary base,
-            /// rounded down, or [`None`] if the number is negative or zero, or if the base is not at least 2.
+            /// rounded down, or [`None`] if the number is negative or zero, or if the base
+            /// is not at least 2.
             ///
             /// # Examples
             ///
@@ -195,7 +196,8 @@ macro_rules! impl_ops {
                 self.get().checked_ilog(base)
             }
 
-            /// Returns the base 2 logarithm of the number, rounded down, or [`None`] if the number is negative or zero.
+            /// Returns the base 2 logarithm of the number, rounded down, or [`None`] if
+            /// the number is negative or zero.
             ///
             /// # Examples
             ///
@@ -211,7 +213,8 @@ macro_rules! impl_ops {
                 self.get().checked_ilog2()
             }
 
-            /// Returns the base 10 logarithm of the number, rounded down, or [`None`] if the number is negative or zero.
+            /// Returns the base 10 logarithm of the number, rounded down, or [`None`] if
+            /// the number is negative or zero.
             ///
             /// # Examples
             ///
