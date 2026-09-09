@@ -99,9 +99,9 @@ impl_bit_uint!(usize, BitUsize);
 impl<T: Unsigned + PrimInt, const N: u32> BitUint<T, N> {
     /// Creates a new `BitUint` with the given unsigned integer value.
     ///
-    /// This method does not check whether the value is a valid `N`-bit unsigned
-    /// integer. This results in undefined behaviour if the value is not a valid
-    /// `N`-bit unsigned integer.
+    /// This function does not check whether the value is a valid `N`-bit
+    /// unsigned integer. This results in undefined behaviour if the value
+    /// is not a valid `N`-bit unsigned integer.
     ///
     /// # Safety
     ///
