@@ -128,7 +128,7 @@ impl_bit_int!(isize, BitIsize);
 impl<T: Signed + PrimInt, const N: u32> BitInt<T, N> {
     /// Creates a new `BitInt` with the given signed integer value.
     ///
-    /// This method does not check whether the value is a valid `N`-bit signed
+    /// This function does not check whether the value is a valid `N`-bit signed
     /// integer. This results in undefined behaviour if the value is not a valid
     /// `N`-bit signed integer.
     ///
